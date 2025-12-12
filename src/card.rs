@@ -53,7 +53,13 @@ struct Card {
 
 // Define Card implications
 impl Card {
-
+    // Constructor
+    pub fn new(suit: Suit, rank: Rank) -> Card {
+        Card {
+            suit,
+            rank,
+        }
+    }
     // getter methods
     pub fn suit(&self) -> &Suit {
         &self.suit
