@@ -1,3 +1,4 @@
+#[derive(Debug, Clone, Copy, PartialEq)]
 // Create Suit enum
 pub enum Suit {
     Hearts,
@@ -47,5 +48,14 @@ impl Card {
             Rank::KING => 10,
             Rank::ACE => 11,
         }
+    }
+
+    // getter methods
+    pub fn suit(&self) -> &Suit {
+        &self.suit
+    }
+
+    pub fn rank(&self) -> &Rank {
+        &self.rank
     }
 }
