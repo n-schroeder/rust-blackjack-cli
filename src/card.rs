@@ -46,7 +46,7 @@ impl Rank {
 }
 
 // Create Card Struct
-struct Card {
+pub struct Card {
     suit: Suit,
     rank: Rank,
 }
