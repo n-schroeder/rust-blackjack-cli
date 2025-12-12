@@ -20,3 +20,8 @@ pub enum Rank {
     KING,
     ACE,
 }
+
+struct Card {
+    suit: Suit,
+    rank: Rank,
+}
