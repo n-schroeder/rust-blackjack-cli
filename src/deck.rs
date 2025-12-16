@@ -26,7 +26,7 @@ use rand::Rng;
 
     // shuffle deck method
     pub fn shuffle(&mut self) {
-        // initialize rng as a range
+        // initialize rng
         let mut rng = rand::rng();
 
         // use for loop to reverse iterate through Deck.cards
