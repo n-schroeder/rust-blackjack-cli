@@ -1,3 +1,4 @@
+mod card;
 mod deck;
 
 fn main() {
