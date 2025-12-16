@@ -1,6 +1,8 @@
 // import crates
 use crate::card::{Suit, Rank, Card};
+use rand::Rng;
 
+#[derive(Debug)]
  // define Deck struct
  pub struct Deck {
     pub cards: Vec<Card>,
@@ -21,6 +23,13 @@ use crate::card::{Suit, Rank, Card};
         // return cards as Deck using field init shorthand
         Deck { cards }
     }
+    pub fn shuffle(&mut self) {
+        let mut rng = rand::rng();
+        for i in (1..self.cards.len()).rev() {
+            let n = rng.random_range(0..=i);
+            self.cards.swap(i,n);
+        }
+    }
  }
 
 // TESTING
@@ -36,4 +45,6 @@ mod tests {
         // test using assertion
         assert_eq!(d.cards.len(), 52);
     }
+
+
 }
