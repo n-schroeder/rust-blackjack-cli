@@ -17,6 +17,7 @@ impl Suit {
     }
 }
 
+#[derive(Debug, Clone, Copy, PartialEq)]
 // Create Rank enum
 pub enum Rank {
     TWO,
@@ -73,6 +74,7 @@ impl Rank {
     }
 }
 
+#[derive(Debug, Clone, Copy, PartialEq)]
 // Create Card Struct
 pub struct Card {
     suit: Suit,

@@ -46,5 +46,16 @@ mod tests {
         assert_eq!(d.cards.len(), 52);
     }
 
-
+    # [test]
+    fn test_deck_shuffle() {
+        let mut d = Deck::new();
+        for i in 0..52 {
+            println!("Item {}: {:?}", i + 1, d.cards[i]);
+        }
+        println!();
+        d.shuffle();
+        for i in 0..52 {
+            println!("Item {}: {:?}", i + 1, d.cards[i]);
+        }
+    }
 }
