@@ -34,6 +34,7 @@ impl Rank {
             Rank::FOUR => 4,
             Rank::FIVE => 5,
             Rank::SIX => 6,
+            Rank::SEVEN => 7,
             Rank::EIGHT => 8,
             Rank::NINE => 9,
             Rank::TEN => 10,
@@ -70,6 +71,6 @@ impl Card {
     }
 
     pub fn value(&self) -> u8 {
-        &self.rank.value()
+        self.rank.value()
     }
 }
