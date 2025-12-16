@@ -30,6 +30,9 @@ use rand::Rng;
             self.cards.swap(i,n);
         }
     }
+    pub fn deal(&mut self) -> Option<Card> {
+        self.cards.pop()
+    }
  }
 
 // TESTING
@@ -58,4 +61,5 @@ mod tests {
             println!("Item {}: {:?}", i + 1, d.cards[i]);
         }
     }
+
 }
