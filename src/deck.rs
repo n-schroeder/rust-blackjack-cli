@@ -62,4 +62,12 @@ mod tests {
         }
     }
 
+    # [test]
+    fn test_deal() {
+        let mut d = Deck::new();
+        let card = d.cards[51];
+        let return_card = d.deal();
+        
+        assert_eq!(card, return_card.unwrap())
+    }
 }
