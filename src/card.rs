@@ -1,12 +1,23 @@
 #[derive(Debug, Clone, Copy, PartialEq)]
 // Create Suit enum
 pub enum Suit {
-    Hearts,
-    Diamonds,
-    Clubs,
-    Spades,
+    HEARTS,
+    DIAMONDS,
+    CLUBS,
+    SPADES,
 }
 
+impl Suit {
+    pub fn all() -> Vec<Suit> {
+        vec![
+            Suit::HEARTS,
+            Suit::DIAMONDS,
+            Suit::CLUBS,
+            Suit::SPADES]
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq)]
 // Create Rank enum
 pub enum Rank {
     TWO,
@@ -44,8 +55,26 @@ impl Rank {
             Rank::ACE => 11,
         }
     }
+    pub fn all() -> Vec<Rank> {
+        vec![
+            Rank::TWO,
+            Rank::THREE,
+            Rank::FOUR,
+            Rank::FIVE,
+            Rank::SIX,
+            Rank::SEVEN,
+            Rank::EIGHT,
+            Rank::NINE,
+            Rank::TEN,
+            Rank::JACK,
+            Rank::QUEEN,
+            Rank::KING,
+            Rank::ACE
+        ] 
+    }
 }
 
+#[derive(Debug, Clone, Copy, PartialEq)]
 // Create Card Struct
 pub struct Card {
     suit: Suit,
