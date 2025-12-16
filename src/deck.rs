@@ -22,3 +22,18 @@ use crate::card::{Suit, Rank, Card};
         Deck { cards }
     }
  }
+
+// TESTING
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    # [test]
+    fn test_deck_initialization() {
+        // setup
+        let d = Deck::new();
+
+        // test using assertion
+        assert_eq!(d.cards.len(), 52);
+    }
+}
