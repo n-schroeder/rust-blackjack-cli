@@ -14,4 +14,10 @@ impl Hand {
         // Hand is an object containing a vector that holds Card objects
         Hand { cards }
     }
+
+    // method to add Card to Hand
+    pub fn add_card(&mut self, card: Card) {
+        // push Card to cards
+        self.cards.push(card);
+    }
 }
