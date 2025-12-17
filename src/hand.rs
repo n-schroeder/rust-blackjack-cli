@@ -31,7 +31,7 @@ impl Hand {
         // else return false
         false
     }
-    
+
     // calculate Hand value
     pub fn value(&self) -> u8 {
         // declare vars
@@ -99,6 +99,7 @@ mod tests {
         h.add_card(ace);
 
         assert_eq!(h.value(), 21);
+        assert_eq!(h.is_blackjack(), true);
 
         // test bust adjustment with single ace
         h.add_card(six);
