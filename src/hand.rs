@@ -23,13 +23,7 @@ impl Hand {
 
     // check for blackjack
     pub fn is_blackjack(&self) -> bool {
-        if self.cards.len() == 2 {
-            if self.value() == 21 {
-                return true;
-            }
-        }
-        // else return false
-        false
+        self.cards.len() == 2 && self.value() == 21
     }
 
     // calculate Hand value
