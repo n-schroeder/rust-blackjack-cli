@@ -20,6 +20,35 @@ impl Hand {
         // push Card to cards
         self.cards.push(card);
     }
+
+    // calculate Hand value
+    pub fn value(&self) -> u8 {
+        // declare vars
+        let mut total_value: u8 = 0;
+        let mut ace_count: u8 = 0;
+
+        // iterate through Cards in Hand
+        for c in &self.cards {
+            // add value of card to total_value
+            total_value += c.value();
+            
+            // if ace, increment ace_count
+            if c.rank() == &Rank::ACE {
+                ace_count += 1;
+            }
+        }
+
+        // adjust for bust
+        if total_value > 21 && ace_count > 0 {
+            // decrement total_value by 10
+            total_value -= 10;
+            // decrement ace count by 1
+            ace_count -= 1;
+        }
+
+        // return total_value
+        total_value
+    }
 }
 
 #[cfg(test)]
