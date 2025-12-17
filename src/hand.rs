@@ -21,6 +21,17 @@ impl Hand {
         self.cards.push(card);
     }
 
+    // check for blackjack
+    pub fn is_blackjack(&self) -> bool {
+        if self.cards.len() == 2 {
+            if self.value() == 21 {
+                return true;
+            }
+        }
+        // else return false
+        false
+    }
+    
     // calculate Hand value
     pub fn value(&self) -> u8 {
         // declare vars
@@ -99,5 +110,4 @@ mod tests {
 
         assert_eq!(h.value(), 18);
     }
-
 }
