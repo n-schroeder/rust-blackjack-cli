@@ -39,7 +39,7 @@ impl Hand {
         }
 
         // adjust for bust
-        if total_value > 21 && ace_count > 0 {
+        while total_value > 21 && ace_count > 0 {
             // decrement total_value by 10
             total_value -= 10;
             // decrement ace count by 1
