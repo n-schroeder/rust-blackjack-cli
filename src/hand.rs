@@ -56,6 +56,7 @@ impl Hand {
 mod tests {
     use super::*;
 
+    // test add_card()
     # [test]
     fn test_add_card() {
         // create new Hand and Card
@@ -71,4 +72,32 @@ mod tests {
         // affirm that Hand contains ace of spades
         assert_eq!(h.cards[0], c);
     }
+
+    // test value calculation
+    # [test]
+    fn test_value_calculation() {
+        // create Hands
+        let mut h = Hand::new();
+        // create Cards
+        let jack = Card::new(Suit::CLUBS, Rank::JACK);
+        let ace = Card::new(Suit::HEARTS, Rank::ACE);
+        let six = Card::new(Suit::DIAMONDS, Rank::SIX);
+
+        // test base calculation
+        h.add_card(jack);
+        h.add_card(ace);
+
+        assert_eq!(h.value(), 21);
+
+        // test bust adjustment with single ace
+        h.add_card(six);
+
+        assert_eq!(h.value(), 17);
+
+        // test bust adjustment with multiple aces
+        h.add_card(ace);
+
+        assert_eq!(h.value(), 18);
+    }
+
 }
