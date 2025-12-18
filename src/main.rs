@@ -96,6 +96,7 @@ fn main() {
 
                 // game loop decision
                 if !ask_play_again() { break 'game_session }
+                continue 'game_session
             }
         }
 
