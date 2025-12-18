@@ -5,6 +5,8 @@ mod hand;
 // imports
 use std::io::{self, stdin, Write};
 
+use crate::{deck::Deck, hand::Hand};
+
 fn main() {
     // declare vars
     let mut play_again: bool = true;
@@ -59,13 +61,24 @@ fn main() {
             break
         }
 
-        // create Hand to test Display trait
-        let mut player_hand = hand::Hand { cards: Vec::new() };
-        // add some Cards to Hand
-        player_hand.add_card(card::Card::new(card::Suit::HEARTS, card::Rank::ACE));
-        player_hand.add_card(card::Card::new(card::Suit::SPADES, card::Rank::TEN));
-        // print Hand using Display trait
-        println!("Your hand: {}", player_hand); 
+        // game logic
+        // create two player hands
+        let mut player = Hand::new();
+        let mut dealer = Hand::new();
+
+        // create + shuffle deck
+        let mut deck = Deck::new();
+        deck.shuffle();
+
+        // deal cards to player
+        player.add_card(Option::expect(deck.deal(), "No more cards in deck! This will never happen"));
+        player.add_card(Option::expect(deck.deal(), "No more cards in deck! This will never happen"));
+        // deal upcard to dealer
+        dealer.add_card(Option::expect(deck.deal(), "No more cards in deck! This will never happen"));
+        let downcard = deck.deal();
+
+        // show hands
+        println!("\nDealer: {}    Player: {}", dealer, player);
 
         iteration += 1;
         println!();
