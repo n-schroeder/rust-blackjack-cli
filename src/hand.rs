@@ -1,5 +1,6 @@
 // imports
 use crate::card::{Suit, Rank, Card};
+use std::fmt;
 
 pub struct Hand {
     pub cards: Vec<Card>,
@@ -53,6 +54,23 @@ impl Hand {
 
         // return total_value
         total_value
+    }
+}
+
+// format print for Hand
+impl fmt::Display for Hand {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        // Create a temporary string to hold the card representations
+        let mut hand_str = String::new();
+
+        for card in &self.cards {
+            // Because Card implements Display, we can just push it!
+            hand_str.push_str(&format!("{} ", card)); 
+        }
+
+        // Write the final string to the formatter
+        // .trim() removes the trailing space from the loop
+        write!(f, "[{}]", hand_str.trim())
     }
 }
 

@@ -58,6 +58,15 @@ fn main() {
             // exit betting loop
             break
         }
+
+        // create Hand to test Display trait
+        let mut player_hand = hand::Hand { cards: Vec::new() };
+        // add some Cards to Hand
+        player_hand.add_card(card::Card::new(card::Suit::HEARTS, card::Rank::ACE));
+        player_hand.add_card(card::Card::new(card::Suit::SPADES, card::Rank::TEN));
+        // print Hand using Display trait
+        println!("Your hand: {}", player_hand); 
+
         iteration += 1;
         println!();
         println!("iteration: {}", iteration);
