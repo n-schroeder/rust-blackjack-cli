@@ -81,7 +81,7 @@ fn main() {
         println!("\nDealer: {}    Player: {}", dealer, player);
 
         // check for player blackjack
-         if player.is_blackjack() {
+        if player.is_blackjack() {
             // player blackjack && !dealer blackjack
             if !dealer.is_blackjack() {
                 println!("Blackjack! You win!");
@@ -217,8 +217,8 @@ fn ask_play_again(bankroll: u32) -> bool {
         }
         // declare input var
         let mut input = String::new();
-        // prompt user
 
+        // prompt user
         print!("Play again? (y/n): ");
 
         // flush stdout
