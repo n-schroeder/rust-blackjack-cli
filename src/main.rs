@@ -13,6 +13,7 @@ fn main() {
     let mut bankroll: u32 = 1000;
     let iteration: u16 = 0;
     // greet player
+    println!("\n\n\n----------------------------------------------");
     println!("Welcome! You have a starting bankroll of $1000");
 
     // create play-loop
@@ -87,7 +88,7 @@ fn main() {
                 bankroll += bet;
                 
                 // game loop decision
-                if !ask_play_again() { break 'game_session }
+                if !ask_play_again(bankroll) { break 'game_session }
                 continue 'game_session
             }
             // player blackjack && dealer blackjack
@@ -95,7 +96,7 @@ fn main() {
                 println!("Unlucky! Dealer has blackjack as well. Push");
 
                 // game loop decision
-                if !ask_play_again() { break 'game_session }
+                if !ask_play_again(bankroll) { break 'game_session }
                 continue 'game_session
             }
         }
@@ -124,7 +125,7 @@ fn main() {
                     if player.value() > 21 {
                         println!("Bust! You lose.");
                         bankroll -= bet;
-                        if !ask_play_again() { break 'game_session }
+                        if !ask_play_again(bankroll) { break 'game_session }
                         continue 'game_session
                     }
                     // continue hit/stand loop
@@ -153,7 +154,7 @@ fn main() {
             bankroll -= bet;
 
             // play again?
-            if !ask_play_again() { break 'game_session }
+            if !ask_play_again(bankroll) { break 'game_session }
             continue 'game_session
         }
 
@@ -171,24 +172,54 @@ fn main() {
                 bankroll += bet;
 
                 // prompt to play again
-                if !ask_play_again() { break 'game_session }
+                if !ask_play_again(bankroll) { break 'game_session }
                 continue 'game_session
             }
         }
 
+        // print hand value
+        println!("Dealer: {}    Player: {}", dealer.value(), player.value());
+
         // determine winner
-        
+        if player.value() > dealer.value() {
+            println!("Conratulations! You win.");
+            bankroll += bet;
+
+            // prompt to play again
+            if !ask_play_again(bankroll) { break 'game_session }
+            continue 'game_session
+        }
+        if player.value() < dealer.value() {
+            println!("You lose!");
+            bankroll -= bet;
+
+            // prompt to play again
+            if !ask_play_again(bankroll) { break 'game_session }
+            continue 'game_session
+        }
+        if player.value() == dealer.value() {
+            println!("It's a push at {}", player.value());
+
+            // prompt to play again
+            if !ask_play_again(bankroll) { break 'game_session }
+            continue 'game_session
+        }
     }
 }
 
 // play-again helper function
-fn ask_play_again() -> bool {
+fn ask_play_again(bankroll: u32) -> bool {
     loop {
+        // check balance
+        if bankroll == 0 {
+            println!("You are out of money! You are not useful to us anymore");
+            return false;
+        }
         // declare input var
         let mut input = String::new();
         // prompt user
 
-        print!("Play again? (y/n)");
+        print!("Play again? (y/n): ");
 
         // flush stdout
         io::stdout().flush().expect("Failed to flush stdout");
