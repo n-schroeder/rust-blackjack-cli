@@ -3,12 +3,11 @@ mod deck;
 mod hand;
 
 // imports
-use std::io::{self, stdin};
+use std::io::{self, stdin, Write};
 
 fn main() {
     // declare vars
     let mut play_again: bool = true;
-    let mut input: String = String::new();
     let mut bet: u32 = 0;
     let mut bankroll: u32 = 1000;
     let mut iteration: u16 = 0;
@@ -24,9 +23,12 @@ fn main() {
 
         // betting loop
         loop {
+            // declare input var
+            let mut input: String = String::new();
             // prompt player
             print!("Enter your bet amount: $");
-            // read input
+            // flush and read input
+            io::stdout().flush().expect("Failed to flush stdout");
             io::stdin()
                 .read_line(&mut input)
                 .expect("Failed to read bet");
@@ -52,9 +54,14 @@ fn main() {
             }
             if bet == 1 {
                 println!("chud");
-                break
             }
-            else { break }
+            // exit betting loop
+            break
         }
+        iteration += 1;
+        println!();
+        println!("iteration: {}", iteration);
+        println!();
+        play_again = true
     }
 }
