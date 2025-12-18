@@ -101,11 +101,11 @@ fn main() {
         }
 
         // player hit/stand loop
-        'hit_or_stand: loop {
+        'player_turn: loop {
             // declare input var
             let mut input = String::new();
             // prompt user
-            println!("Would you like to (h)it or (s)tand?");
+            print!("Would you like to (h)it or (s)tand?: ");
 
             // flush and read user decision
             io::stdout().flush().unwrap();
@@ -129,7 +129,7 @@ fn main() {
                     }
                     // continue hit/stand loop
                     if player.value() <= 21 {
-                        continue 'hit_or_stand
+                        continue 'player_turn
                     }
                 },
                 // if player stands, continue game_session
@@ -137,13 +137,9 @@ fn main() {
                 // invalid input
                 _ => println!("Invalid Input"),
             }
-
         }
 
-        iteration += 1;
-        println!();
-        println!("iteration: {}", iteration);
-        println!();
+        // dealer turn
     }
 }
 
