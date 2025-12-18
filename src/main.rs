@@ -11,7 +11,7 @@ fn main() {
     // declare vars
     let mut bet: u32 = 0;
     let mut bankroll: u32 = 1000;
-    let mut iteration: u16 = 0;
+    let iteration: u16 = 0;
     // greet player
     println!("Welcome! You have a starting bankroll of $1000");
 
@@ -23,7 +23,7 @@ fn main() {
         }
 
         // betting loop
-        loop {
+        'betting: loop {
             // declare input var
             let mut input: String = String::new();
             // prompt player
@@ -40,24 +40,24 @@ fn main() {
                 Ok(num) => num,
                 Err(_) => {
                     println!("That was not a number!");
-                    continue
+                    continue 'betting
                 }
             };
 
             // verify valid bet
             if bet > bankroll {
                 println!("Bad bet. Insufficient funds");
-                continue
+                continue 'betting
             }
             if bet == 0 {
                 println!("You can't play for free ;)");
-                continue
+                continue 'betting
             }
             if bet == 1 {
                 println!("chud");
             }
             // exit betting loop
-            break
+            break 'betting
         }
 
         // game logic
@@ -122,7 +122,7 @@ fn main() {
 
                     // check for bust
                     if player.value() > 21 {
-                        println!("Bust! You lose");
+                        println!("Bust! You lose.");
                         bankroll -= bet;
                         if !ask_play_again() { break 'game_session }
                         continue 'game_session
@@ -133,13 +133,51 @@ fn main() {
                     }
                 },
                 // if player stands, continue game_session
-                "s" | "stand" => { continue 'game_session },
+                "s" | "stand" => { break 'player_turn },
                 // invalid input
                 _ => println!("Invalid Input"),
             }
         }
-
+       
+        // add downcard
+        dealer.add_card(downcard.unwrap());
+        
         // dealer turn
+        println!("Dealer's Turn");
+        // show hands
+        println!("\nDealer: {}    Player: {}", dealer, player);
+
+        // check for dealer blackjack
+        if dealer.is_blackjack() {
+            println!("Dealer Blackjack! You lose.");
+            bankroll -= bet;
+
+            // play again?
+            if !ask_play_again() { break 'game_session }
+            continue 'game_session
+        }
+
+        // dealer hit loop
+        while dealer.value() < 17 {
+            // deal card to dealer
+            dealer.add_card(Option::expect(deck.deal(), "No more cards in deck! This will never happen"));
+            
+            // print
+            println!("Dealer hits...");
+            println!("\nDealer: {}    Player: {}", dealer, player);
+            // handle dealer bust
+            if dealer.value() < 21 {
+                println!("Conratulations! You win.");
+                bankroll += bet;
+
+                // prompt to play again
+                if !ask_play_again() { break 'game_session }
+                continue 'game_session
+            }
+        }
+
+        // determine winner
+        
     }
 }
 
@@ -150,7 +188,7 @@ fn ask_play_again() -> bool {
         let mut input = String::new();
         // prompt user
 
-        print!("Play again? (y/n");
+        print!("Play again? (y/n)");
 
         // flush stdout
         io::stdout().flush().expect("Failed to flush stdout");
