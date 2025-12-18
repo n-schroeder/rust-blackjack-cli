@@ -9,7 +9,6 @@ use crate::{deck::Deck, hand::Hand};
 
 fn main() {
     // declare vars
-    let mut play_again: bool = true;
     let mut bet: u32 = 0;
     let mut bankroll: u32 = 1000;
     let mut iteration: u16 = 0;
@@ -89,6 +88,7 @@ fn main() {
                 
                 // game loop decision
                 if !ask_play_again() { break 'game_session }
+                continue 'game_session
             }
             // player blackjack && dealer blackjack
             else {
@@ -101,6 +101,44 @@ fn main() {
         }
 
         // player hit/stand loop
+        'hit_or_stand: loop {
+            // declare input var
+            let mut input = String::new();
+            // prompt user
+            println!("Would you like to (h)it or (s)tand?");
+
+            // flush and read user decision
+            io::stdout().flush().unwrap();
+            io::stdin()
+                .read_line(&mut input)
+                .unwrap();
+
+            // match decision with hit or stand
+            match input.trim().to_lowercase().as_str() {
+                "h" | "hit" => {
+                    // add card and show hands
+                    player.add_card(Option::expect(deck.deal(), "No more cards in deck! This will never happen"));
+                    println!("\nDealer: {}    Player: {}", dealer, player);
+
+                    // check for bust
+                    if player.value() > 21 {
+                        println!("Bust! You lose");
+                        bankroll -= bet;
+                        if !ask_play_again() { break 'game_session }
+                        continue 'game_session
+                    }
+                    // continue hit/stand loop
+                    if player.value() <= 21 {
+                        continue 'hit_or_stand
+                    }
+                },
+                // if player stands, continue game_session
+                "s" | "stand" => { continue 'game_session },
+                // invalid input
+                _ => println!("Invalid Input"),
+            }
+
+        }
 
         iteration += 1;
         println!();
@@ -112,9 +150,8 @@ fn main() {
 // play-again helper function
 fn ask_play_again() -> bool {
     loop {
-        // declare vars
+        // declare input var
         let mut input = String::new();
-        let mut user_decision = String::new();
         // prompt user
 
         print!("Play again? (y/n");
@@ -130,7 +167,7 @@ fn ask_play_again() -> bool {
         match input.trim().to_lowercase().as_str() {
             "y" | "yes" => return true,
             "n" | "no" => return false,
-            _ => println!("(y)es or (n)o"),
+            _ => println!("Invalid Input"),
         }
     }
 }
