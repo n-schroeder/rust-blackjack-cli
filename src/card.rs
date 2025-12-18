@@ -1,5 +1,7 @@
-#[derive(Debug, Clone, Copy, PartialEq)]
+use std::fmt;
+
 // Create Suit enum
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Suit {
     HEARTS,
     DIAMONDS,
@@ -14,6 +16,19 @@ impl Suit {
             Suit::DIAMONDS,
             Suit::CLUBS,
             Suit::SPADES]
+    }
+}
+
+// format print for Suit
+impl fmt::Display for Suit {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let symbol = match self {
+            Suit::HEARTS => "♥",
+            Suit::DIAMONDS => "♦",
+            Suit::CLUBS => "♣",
+            Suit::SPADES => "♠",
+        };
+        write!(f, "{}", symbol)
     }
 }
 
@@ -74,6 +89,28 @@ impl Rank {
     }
 }
 
+// format print for Rank
+impl fmt::Display for Rank {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let symbol = match self {
+            Rank::TWO => "2",
+            Rank::THREE => "3",
+            Rank::FOUR => "4",
+            Rank::FIVE => "5",
+            Rank::SIX => "6",
+            Rank::SEVEN => "7",
+            Rank::EIGHT => "8",
+            Rank::NINE => "9",
+            Rank::TEN => "T",
+            Rank::JACK => "J",
+            Rank::QUEEN => "Q",
+            Rank::KING => "K",
+            Rank::ACE => "A",
+        };
+        write!(f, "{}", symbol)
+    }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq)]
 // Create Card Struct
 pub struct Card {
@@ -101,5 +138,12 @@ impl Card {
 
     pub fn value(&self) -> u8 {
         self.rank.value()
+    }
+}
+
+// format print for Card
+impl fmt::Display for Card {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}{}", self.rank, self.suit)
     }
 }
