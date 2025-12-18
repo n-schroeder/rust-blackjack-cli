@@ -23,21 +23,38 @@ fn main() {
         }
 
         // betting loop
-        // prompt player
         loop {
+            // prompt player
             print!("Enter your bet amount: $");
+            // read input
             io::stdin()
                 .read_line(&mut input)
                 .expect("Failed to read bet");
 
             // attempt parse
             bet = match input.trim().parse() {
+                // if result is good, return num
                 Ok(num) => num,
                 Err(_) => {
                     println!("That was not a number!");
                     continue
                 }
+            };
+
+            // verify valid bet
+            if bet > bankroll {
+                println!("Bad bet. Insufficient funds");
+                continue
             }
+            if bet == 0 {
+                println!("You can't play for free ;)");
+                continue
+            }
+            if bet == 1 {
+                println!("chud");
+                break
+            }
+            else { break }
         }
     }
 }
