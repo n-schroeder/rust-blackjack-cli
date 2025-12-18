@@ -17,7 +17,7 @@ fn main() {
     println!("Welcome! You have a starting bankroll of $1000");
 
     // create play-loop
-    while play_again {
+    'game_session: loop {
         // decide if player should be greeted
         if iteration != 0 {
             println!("Welcome! Current bankroll: ${}", bankroll);
@@ -80,10 +80,56 @@ fn main() {
         // show hands
         println!("\nDealer: {}    Player: {}", dealer, player);
 
+        // check for player blackjack
+         if player.is_blackjack() {
+            // player blackjack && !dealer blackjack
+            if !dealer.is_blackjack() {
+                println!("Blackjack! You win!");
+                bankroll += bet;
+                
+                // game loop decision
+                if !ask_play_again() { break 'game_session }
+            }
+            // player blackjack && dealer blackjack
+            else {
+                println!("Unlucky! Dealer has blackjack as well. Push");
+
+                // game loop decision
+                if !ask_play_again() { break 'game_session }
+            }
+        }
+
+        // player hit/stand loop
+
         iteration += 1;
         println!();
         println!("iteration: {}", iteration);
         println!();
-        play_again = true
+    }
+}
+
+// play-again helper function
+fn ask_play_again() -> bool {
+    loop {
+        // declare vars
+        let mut input = String::new();
+        let mut user_decision = String::new();
+        // prompt user
+
+        print!("Play again? (y/n");
+
+        // flush stdout
+        io::stdout().flush().expect("Failed to flush stdout");
+        // read user input
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read user decision");
+
+        // match input with answer and decision
+        match input.trim().to_lowercase().as_str() {
+            "y" | "yes" => return true,
+            "n" | "no" => return false,
+            _ => println!("(y)es or (n)o"),
+        }
     }
 }
