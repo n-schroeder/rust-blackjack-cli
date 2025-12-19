@@ -1,5 +1,7 @@
 use std::fmt;
 
+use colored::*;
+
 // Create Suit enum
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Suit {
@@ -23,10 +25,10 @@ impl Suit {
 impl fmt::Display for Suit {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let symbol = match self {
-            Suit::HEARTS => "♥",
-            Suit::DIAMONDS => "♦",
-            Suit::CLUBS => "♣",
-            Suit::SPADES => "♠",
+            Suit::HEARTS => "♥".red(),
+            Suit::DIAMONDS => "♦".blue(),
+            Suit::CLUBS => "♣".green(),
+            Suit::SPADES => "♠".black(),
         };
         write!(f, "{}", symbol)
     }

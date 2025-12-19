@@ -21,9 +21,9 @@ fn main() {
     'game_session: loop {
         // decide if player should be greeted
         if iteration != 0 {
-            println!("\n\n\n----------------------------------------------");
+            println!("\n\n----------------------------------------------");
             println!("Current bankroll: ${}", bankroll);    
-            println!("----------------------------------------------\n");
+            println!("----------------------------------------------\n\n");
         }
 
         // betting loop
@@ -88,7 +88,7 @@ fn main() {
             // player blackjack && !dealer blackjack
             if !dealer.is_blackjack() {
                 println!("{}", "Blackjack! You win!".green().bold());
-                bankroll += bet;
+                bankroll += (1.5 * bet as f64) as u32;
                 
                 // game loop decision
                 if !ask_play_again(bankroll, &mut iteration) { break 'game_session }
@@ -126,7 +126,7 @@ fn main() {
 
                     // check for bust
                     if player.value() > 21 {
-                        println!("Bust! You lose.");
+                        println!("{}", "Bust! You lose.".red().bold());
                         bankroll -= bet;
                         if !ask_play_again(bankroll, &mut iteration) { break 'game_session }
                         continue 'game_session
@@ -147,13 +147,13 @@ fn main() {
         dealer.add_card(downcard.unwrap());
         
         // dealer turn
-        println!("\nDealer's Turn");
+        println!("\n\n=== Dealer's Turn ===");
         // show hands
-        println!("\nDealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
+        println!("\n   Dealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
 
         // check for dealer blackjack
         if dealer.is_blackjack() {
-            println!("Dealer Blackjack! You lose.");
+            println!("{}", "\nDealer Blackjack! You lose.".red().bold());
             bankroll -= bet;
 
             // play again?
@@ -167,8 +167,8 @@ fn main() {
             dealer.add_card(Option::expect(deck.deal(), "No more cards in deck! This will never happen"));
             
             // print
-            println!("Dealer hits...");
-            println!("\nDealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
+            println!("  Dealer hits...");
+            println!("  Dealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
 
             // handle dealer bust
             if dealer.value() > 21 {
@@ -181,7 +181,9 @@ fn main() {
             }
         }
 
-        
+        // print new line
+        println!();
+
         // determine winner
         if player.value() > dealer.value() {
             println!("{}", "Conratulations! You win.".green().bold());
@@ -192,7 +194,7 @@ fn main() {
             continue 'game_session
         }
         if player.value() < dealer.value() {
-            println!("You lose!");
+            println!("{}", "You lose!".red().bold());
             bankroll -= bet;
 
             // prompt to play again
@@ -200,7 +202,7 @@ fn main() {
             continue 'game_session
         }
         if player.value() == dealer.value() {
-            println!("It's a push at {}", player.value());
+            println!("{}", format!("It's a push at {}", player.value()).blue().bold());
 
             // prompt to play again
             if !ask_play_again(bankroll, &mut iteration) { break 'game_session }
@@ -217,7 +219,7 @@ fn ask_play_again(bankroll: u32, i: &mut u16) -> bool {
 
         // check balance
         if bankroll == 0 {
-            println!("\nYou are out of money! You are not useful to us anymore");
+            println!("{}", "\nYou are out of money! You are not useful to us anymore.\n".red().bold());
             return false;
         }
         // declare input var
