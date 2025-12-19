@@ -3,13 +3,13 @@ mod deck;
 mod hand;
 
 // imports
-use std::io::{self, stdin, Write};
+use std::io::{self, Write};
 
 use crate::{deck::Deck, hand::Hand};
 
 fn main() {
     // declare vars
-    let mut bet: u32 = 0;
+    let mut bet: u32;
     let mut bankroll: u32 = 1000;
     let mut iteration: u16 = 0;
     // greet player
@@ -21,7 +21,9 @@ fn main() {
     'game_session: loop {
         // decide if player should be greeted
         if iteration != 0 {
-            println!("Current bankroll: ${}", bankroll);
+            println!("\n\n\n----------------------------------------------");
+            println!("Current bankroll: ${}", bankroll);    
+            println!("----------------------------------------------\n");
         }
 
         // betting loop
@@ -79,7 +81,7 @@ fn main() {
         let downcard = deck.deal();
 
         // show hands
-        println!("\nDealer: {}    Player: {}", dealer, player);
+        println!("\nDealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
 
         // check for player blackjack
         if player.is_blackjack() {
@@ -120,7 +122,7 @@ fn main() {
                 "h" | "hit" => {
                     // add card and show hands
                     player.add_card(Option::expect(deck.deal(), "No more cards in deck! This will never happen"));
-                    println!("\nDealer: {}    Player: {}", dealer, player);
+                    println!("\nDealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
 
                     // check for bust
                     if player.value() > 21 {
@@ -147,7 +149,7 @@ fn main() {
         // dealer turn
         println!("Dealer's Turn");
         // show hands
-        println!("\nDealer: {}    Player: {}", dealer, player);
+        println!("\nDealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
 
         // check for dealer blackjack
         if dealer.is_blackjack() {
@@ -166,10 +168,11 @@ fn main() {
             
             // print
             println!("Dealer hits...");
-            println!("\nDealer: {}    Player: {}", dealer, player);
+            println!("\nDealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
+
             // handle dealer bust
-            if dealer.value() < 21 {
-                println!("Conratulations! You win.");
+            if dealer.value() > 21 {
+                println!("Dealer Busts! You win!");
                 bankroll += bet;
 
                 // prompt to play again
@@ -179,7 +182,7 @@ fn main() {
         }
 
         // print hand value
-        println!("Dealer: {}    Player: {}", dealer.value(), player.value());
+        println!("\nDealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
 
         // determine winner
         if player.value() > dealer.value() {
