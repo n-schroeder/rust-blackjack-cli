@@ -89,7 +89,7 @@ fn main() {
                 bankroll += bet;
                 
                 // game loop decision
-                if !ask_play_again(bankroll, iteration) { break 'game_session }
+                if !ask_play_again(bankroll, &mut iteration) { break 'game_session }
                 continue 'game_session
             }
             // player blackjack && dealer blackjack
@@ -97,7 +97,7 @@ fn main() {
                 println!("Unlucky! Dealer has blackjack as well. Push");
 
                 // game loop decision
-                if !ask_play_again(bankroll, iteration) { break 'game_session }
+                if !ask_play_again(bankroll, &mut iteration) { break 'game_session }
                 continue 'game_session
             }
         }
@@ -126,7 +126,7 @@ fn main() {
                     if player.value() > 21 {
                         println!("Bust! You lose.");
                         bankroll -= bet;
-                        if !ask_play_again(bankroll, iteration) { break 'game_session }
+                        if !ask_play_again(bankroll, &mut iteration) { break 'game_session }
                         continue 'game_session
                     }
                     // continue hit/stand loop
@@ -155,7 +155,7 @@ fn main() {
             bankroll -= bet;
 
             // play again?
-            if !ask_play_again(bankroll, iteration) { break 'game_session }
+            if !ask_play_again(bankroll, &mut iteration) { break 'game_session }
             continue 'game_session
         }
 
@@ -173,7 +173,7 @@ fn main() {
                 bankroll += bet;
 
                 // prompt to play again
-                if !ask_play_again(bankroll, iteration) { break 'game_session }
+                if !ask_play_again(bankroll, &mut iteration) { break 'game_session }
                 continue 'game_session
             }
         }
@@ -187,7 +187,7 @@ fn main() {
             bankroll += bet;
 
             // prompt to play again
-            if !ask_play_again(bankroll, iteration) { break 'game_session }
+            if !ask_play_again(bankroll, &mut iteration) { break 'game_session }
             continue 'game_session
         }
         if player.value() < dealer.value() {
@@ -195,24 +195,24 @@ fn main() {
             bankroll -= bet;
 
             // prompt to play again
-            if !ask_play_again(bankroll, iteration) { break 'game_session }
+            if !ask_play_again(bankroll, &mut iteration) { break 'game_session }
             continue 'game_session
         }
         if player.value() == dealer.value() {
             println!("It's a push at {}", player.value());
 
             // prompt to play again
-            if !ask_play_again(bankroll, iteration) { break 'game_session }
+            if !ask_play_again(bankroll, &mut iteration) { break 'game_session }
             continue 'game_session
         }
     }
 }
 
 // play-again helper function
-fn ask_play_again(bankroll: u32, mut iteration: u16) -> bool {
+fn ask_play_again(bankroll: u32, i: &mut u16) -> bool {
     loop {
         // increment iteration
-        iteration += 1;
+        *i += 1;
 
         // check balance
         if bankroll == 0 {
