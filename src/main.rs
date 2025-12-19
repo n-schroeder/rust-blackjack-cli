@@ -4,8 +4,8 @@ mod hand;
 
 // imports
 use std::io::{self, Write};
-
 use crate::{deck::Deck, hand::Hand};
+use colored::Colorize;
 
 fn main() {
     // declare vars
@@ -87,7 +87,7 @@ fn main() {
         if player.is_blackjack() {
             // player blackjack && !dealer blackjack
             if !dealer.is_blackjack() {
-                println!("Blackjack! You win!");
+                println!("{}", "Blackjack! You win!".green().bold());
                 bankroll += bet;
                 
                 // game loop decision
@@ -147,7 +147,7 @@ fn main() {
         dealer.add_card(downcard.unwrap());
         
         // dealer turn
-        println!("Dealer's Turn");
+        println!("\nDealer's Turn");
         // show hands
         println!("\nDealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
 
@@ -172,7 +172,7 @@ fn main() {
 
             // handle dealer bust
             if dealer.value() > 21 {
-                println!("Dealer Busts! You win!");
+                println!("{}", "Dealer Busts! You win!".green().bold());
                 bankroll += bet;
 
                 // prompt to play again
@@ -181,12 +181,10 @@ fn main() {
             }
         }
 
-        // print hand value
-        println!("\nDealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
-
+        
         // determine winner
         if player.value() > dealer.value() {
-            println!("Conratulations! You win.");
+            println!("{}", "Conratulations! You win.".green().bold());
             bankroll += bet;
 
             // prompt to play again
@@ -219,14 +217,14 @@ fn ask_play_again(bankroll: u32, i: &mut u16) -> bool {
 
         // check balance
         if bankroll == 0 {
-            println!("You are out of money! You are not useful to us anymore");
+            println!("\nYou are out of money! You are not useful to us anymore");
             return false;
         }
         // declare input var
         let mut input = String::new();
 
         // prompt user
-        print!("Play again? (y/n): ");
+        print!("\nPlay again? (y/n): ");
 
         // flush stdout
         io::stdout().flush().expect("Failed to flush stdout");
