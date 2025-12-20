@@ -13,17 +13,19 @@ fn main() {
     let mut bankroll: u32 = 1000;
     let mut iteration: u16 = 0;
     // greet player
-    println!("\n\n\n----------------------------------------------");
-    println!("Welcome! You have a starting bankroll of $1000");
-    println!("----------------------------------------------\n");
+    //println!("\n\n\n----------------------------------------------");
+    //println!("Welcome! You have a starting bankroll of $1000");
+    //println!("----------------------------------------------\n");
+    display_header(bankroll, iteration);
 
     // create play-loop
     'game_session: loop {
         // decide if player should be greeted
         if iteration != 0 {
-            println!("\n\n----------------------------------------------");
-            println!("Current bankroll: ${}", bankroll);    
-            println!("----------------------------------------------\n\n");
+            //println!("\n\n----------------------------------------------");
+            //println!("Current bankroll: ${}", bankroll);    
+            //println!("----------------------------------------------\n\n");
+            display_header(bankroll, iteration);
         }
 
         // betting loop
@@ -87,7 +89,7 @@ fn main() {
         if player.is_blackjack() {
             // player blackjack && !dealer blackjack
             if !dealer.is_blackjack() {
-                println!("{}", "Blackjack! You win!".green().bold());
+                print_outcome(true, bet);
                 bankroll += (1.5 * bet as f64) as u32;
                 
                 // game loop decision
@@ -126,7 +128,7 @@ fn main() {
 
                     // check for bust
                     if player.value() > 21 {
-                        println!("{}", "Bust! You lose.".red().bold());
+                        print_outcome(false, bet);;
                         bankroll -= bet;
                         if !ask_play_again(bankroll, &mut iteration) { break 'game_session }
                         continue 'game_session
@@ -147,13 +149,13 @@ fn main() {
         dealer.add_card(downcard.unwrap());
         
         // dealer turn
-        println!("\n\n=== Dealer's Turn ===");
+        println!("\n\n=== Dealer's Turn ===\n");
         // show hands
-        println!("\n   Dealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
+        println!("\n  Dealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
 
         // check for dealer blackjack
         if dealer.is_blackjack() {
-            println!("{}", "\nDealer Blackjack! You lose.".red().bold());
+            print_outcome(false, bet);
             bankroll -= bet;
 
             // play again?
@@ -172,7 +174,8 @@ fn main() {
 
             // handle dealer bust
             if dealer.value() > 21 {
-                println!("{}", "Dealer Busts! You win!".green().bold());
+                println!("\n");
+                print_outcome(true, bet);
                 bankroll += bet;
 
                 // prompt to play again
@@ -182,11 +185,11 @@ fn main() {
         }
 
         // print new line
-        println!();
+        println!("\n");
 
         // determine winner
         if player.value() > dealer.value() {
-            println!("{}", "Conratulations! You win.".green().bold());
+            print_outcome(true, bet);
             bankroll += bet;
 
             // prompt to play again
@@ -194,7 +197,7 @@ fn main() {
             continue 'game_session
         }
         if player.value() < dealer.value() {
-            println!("{}", "You lose!".red().bold());
+            print_outcome(false, bet);
             bankroll -= bet;
 
             // prompt to play again
@@ -219,14 +222,14 @@ fn ask_play_again(bankroll: u32, i: &mut u16) -> bool {
 
         // check balance
         if bankroll == 0 {
-            println!("{}", "\nYou are out of money! You are not useful to us anymore.\n".red().bold());
+            println!("{}", "\n\nYou are out of money! You are not useful to us anymore.\n\n".red().bold());
             return false;
         }
         // declare input var
         let mut input = String::new();
 
         // prompt user
-        print!("\nPlay again? (y/n): ");
+        print!("\n\nPlay again? (y/n): ");
 
         // flush stdout
         io::stdout().flush().expect("Failed to flush stdout");
@@ -242,4 +245,57 @@ fn ask_play_again(bankroll: u32, i: &mut u16) -> bool {
             _ => println!("Invalid Input"),
         }
     }
+}
+
+// print outcome loop
+fn print_outcome(won: bool, amount: u32) {
+    // 1. Define the text and color based on the result
+    let msg = 
+    if won { "YOU WIN!" }
+    else { "YOU LOSE" };
+
+    // 2. Helper closure to apply the color dynamically
+    // This allows us to apply "red" or "green" to the whole string at once
+    let colorize = |s: String| -> String {
+        if won { s.green().to_string() } else { s.red().to_string() }
+    };
+
+    // 3. Print the Box
+    // We format the string FIRST, then colorize the whole thing.
+    println!("{}", colorize("┌──────────────────────────────┐".to_string()));
+    
+    // The Message Row
+    let msg_line = format!("│          {:<12}        │", msg);
+    println!("{}", colorize(msg_line));
+
+    // The Money Row (Using your {:<5} spacing!)
+    // If won, we show "Payout", if lost, we show "Loss"
+    let label = if won { "Payout" } else { "  Loss" }; // padded to match length
+    let money_line = format!("│        {}: ${:<5}        │", label, amount);
+    println!("{}", colorize(money_line));
+
+    println!("{}", colorize("└──────────────────────────────┘".to_string()));
+}
+
+// display header
+fn display_header(bankroll: u32, iteration: u16) {
+    // 1. Clear the screen (optional, but makes it look like a real game app)
+    // \x1B[2J clears screen, \x1B[1;1H moves cursor to top-left
+    print!("\x1B[2J\x1B[1;1H");
+
+    // 2. Choose the Title based on iteration
+    let title = if iteration == 0 { "WELCOME TO BLACKJACK" } else { "WELCOME BACK" };
+
+    // 3. Print the Box
+    // formatting: {:^28} centers the text in a 28-char wide space
+    println!("{}", "┌──────────────────────────────┐".cyan());
+    print!("{}", "│".cyan().bold());
+    print!(" {:^28} ", title.cyan().bold());
+    println!("{}", "│".cyan().bold());
+    println!("{}", "├──────────────────────────────┤".cyan());
+    print!("{}", "│".cyan().bold());
+    print!("   Current Bankroll: ${:<7} ", bankroll.to_string().green().bold());
+    println!("{}", "│".cyan().bold());
+    println!("{}", "└──────────────────────────────┘".cyan());
+    println!(); // Add a newline for breathing room
 }
