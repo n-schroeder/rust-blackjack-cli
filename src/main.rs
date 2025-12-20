@@ -13,18 +13,12 @@ fn main() {
     let mut bankroll: u32 = 1000;
     let mut iteration: u16 = 0;
     // greet player
-    //println!("\n\n\n----------------------------------------------");
-    //println!("Welcome! You have a starting bankroll of $1000");
-    //println!("----------------------------------------------\n");
     display_header(bankroll, iteration);
 
     // create play-loop
     'game_session: loop {
         // decide if player should be greeted
         if iteration != 0 {
-            //println!("\n\n----------------------------------------------");
-            //println!("Current bankroll: ${}", bankroll);    
-            //println!("----------------------------------------------\n\n");
             display_header(bankroll, iteration);
         }
 
@@ -59,7 +53,7 @@ fn main() {
                 println!("You can't play for free ;)");
                 continue 'betting
             }
-            if bet == 1 {
+            if bet == 67 {
                 println!("chud");
             }
             // exit betting loop
@@ -89,8 +83,10 @@ fn main() {
         if player.is_blackjack() {
             // player blackjack && !dealer blackjack
             if !dealer.is_blackjack() {
+                println!();
+                let blackjack_payout: u32 = (1.5 * bet as f64) as u32;
                 print_outcome(true, bet);
-                bankroll += (1.5 * bet as f64) as u32;
+                bankroll += blackjack_payout;
                 
                 // game loop decision
                 if !ask_play_again(bankroll, &mut iteration) { break 'game_session }
@@ -151,10 +147,11 @@ fn main() {
         // dealer turn
         println!("\n\n=== Dealer's Turn ===\n");
         // show hands
-        println!("\n  Dealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
+        println!("\n    Dealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
 
         // check for dealer blackjack
         if dealer.is_blackjack() {
+            println!();
             print_outcome(false, bet);
             bankroll -= bet;
 
@@ -169,12 +166,12 @@ fn main() {
             dealer.add_card(Option::expect(deck.deal(), "No more cards in deck! This will never happen"));
             
             // print
-            println!("  Dealer hits...");
-            println!("  Dealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
+            println!("    Dealer hits...");
+            println!("    Dealer: {} ({})    Player: {} ({})\n", dealer, dealer.value(), player, player.value());
 
             // handle dealer bust
             if dealer.value() > 21 {
-                println!("\n");
+                println!();
                 print_outcome(true, bet);
                 bankroll += bet;
 
@@ -185,7 +182,7 @@ fn main() {
         }
 
         // print new line
-        println!("\n");
+        println!();
 
         // determine winner
         if player.value() > dealer.value() {
