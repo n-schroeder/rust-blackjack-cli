@@ -12,8 +12,8 @@ pub enum Suit {
 }
 
 impl Suit {
-    pub fn all() -> Vec<Suit> {
-        vec![
+    pub fn all() -> &'static [Suit] {
+        &[
             Suit::HEARTS,
             Suit::DIAMONDS,
             Suit::CLUBS,
@@ -72,8 +72,8 @@ impl Rank {
             Rank::ACE => 11,
         }
     }
-    pub fn all() -> Vec<Rank> {
-        vec![
+    pub fn all() -> &'static [Rank] {
+        &[
             Rank::TWO,
             Rank::THREE,
             Rank::FOUR,

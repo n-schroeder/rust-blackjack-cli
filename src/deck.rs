@@ -17,7 +17,7 @@ use rand::Rng;
         // loop through suits and ranks to populate cards vector
         for suit in Suit::all() {
             for rank in Rank::all() {
-                cards.push(Card::new(suit, rank));
+                cards.push(Card::new(*suit, *rank));
             }
         }
         // return cards as Deck using field init shorthand
