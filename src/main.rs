@@ -124,7 +124,8 @@ fn main() {
 
                     // check for bust
                     if player.value() > 21 {
-                        print_outcome(false, bet);;
+                        println!();
+                        print_outcome(false, bet);
                         bankroll -= bet;
                         if !ask_play_again(bankroll, &mut iteration) { break 'game_session }
                         continue 'game_session
