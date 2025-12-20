@@ -85,7 +85,7 @@ fn main() {
             if !dealer.is_blackjack() {
                 println!();
                 let blackjack_payout: u32 = (1.5 * bet as f64) as u32;
-                print_outcome(true, bet);
+                print_outcome(true, blackjack_payout);
                 bankroll += blackjack_payout;
                 
                 // game loop decision
