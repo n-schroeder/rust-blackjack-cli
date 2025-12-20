@@ -1,6 +1,7 @@
 mod card;
 mod deck;
 mod hand;
+mod game;
 
 // imports
 use std::io::{self, Write};
