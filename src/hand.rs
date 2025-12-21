@@ -22,6 +22,11 @@ impl Hand {
         self.cards.push(card);
     }
 
+    // clear hand
+    pub fn clear(&mut self) {
+        self.cards.clear();
+    }
+
     // check for blackjack
     pub fn is_blackjack(&self) -> bool {
         self.cards.len() == 2 && self.value() == 21
