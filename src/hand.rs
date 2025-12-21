@@ -65,7 +65,7 @@ impl fmt::Display for Hand {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         // for each card in the cards vector in the hand
         for card in &self.cards {
-            write!(f, "[{} ]", card)?;
+            write!(f, "[{}]", card)?;
         }
         Ok(())
     }
