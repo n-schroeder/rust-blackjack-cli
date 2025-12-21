@@ -57,20 +57,17 @@ impl Hand {
     }
 }
 
-// format print for Hand
+/// Format print for Hand
+/// 
+/// parameters: reference to self (Hand), mutable reference to format
+/// return type: the result that should be printed to the screen
 impl fmt::Display for Hand {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        // Create a temporary string to hold the card representations
-        let mut hand_str = String::new();
-
+        // for each card in the cards vector in the hand
         for card in &self.cards {
-            // Because Card implements Display, we can just push it!
-            hand_str.push_str(&format!("{} ", card)); 
+            write!(f, "[{} ]", card)?;
         }
-
-        // Write the final string to the formatter
-        // .trim() removes the trailing space from the loop
-        write!(f, "[{}]", hand_str.trim())
+        Ok(())
     }
 }
 
