@@ -63,7 +63,7 @@ impl Game {
         // set bet
         self.bet = bet;
 
-        // clear hands [FINISH IN HAND]
+        // clear hands
         self.player.clear();
         self.dealer.clear();
 
