@@ -2,7 +2,7 @@
 use crate::card::{Suit, Rank, Card};
 use rand::Rng;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
  // define Deck struct
 pub struct Deck {
     pub cards: Vec<Card>,

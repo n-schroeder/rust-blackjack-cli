@@ -74,7 +74,7 @@ pub fn get_bet(bankroll:u32) -> u32 {
     }
 }
 
-pub fn show_hands(player_hand: Hand, dealer_hand: Hand) {
+pub fn show_hands(player_hand: &Hand, dealer_hand: &Hand) {
     println!("\nDealer: {} ({})    Player: {} ({})\n",
         dealer_hand, dealer_hand.value(),
         player_hand, player_hand.value());

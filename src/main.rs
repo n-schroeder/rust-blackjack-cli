@@ -13,16 +13,21 @@ fn main() {
     // Create new game
     let mut game = Game::new(1000);
 
-    // Welcome user
-    ui::display_header(game.i, game.bankroll);
+    'session: loop {
+        // Welcome user
+        ui::display_header(game.i, game.bankroll);
 
-    // create temporary bet and assign to game.bet
-    let temp_bet: u32 = ui::get_bet(game.bankroll);
-    game.bet = temp_bet;
+        // create temporary bet and assign to game.bet
+        let temp_bet: u32 = ui::get_bet(game.bankroll);
+        game.bet = temp_bet;
 
-    // initial deal
-    game.initial_deal();
+        // initial deal
+        game.initial_deal();
 
-    // show hands
-    ui::show_hands(game.player_hand, game.dealer_hand);
+        // play loop
+        loop {
+            // show hands
+            ui::show_hands(&game.player_hand, &game.dealer_hand);
+        }
+    }
 }

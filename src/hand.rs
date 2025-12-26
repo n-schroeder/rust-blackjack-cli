@@ -2,6 +2,7 @@
 use crate::card::{Suit, Rank, Card};
 use std::fmt;
 
+#[derive(Debug, Clone)]
 pub struct Hand {
     pub cards: Vec<Card>,
 }
