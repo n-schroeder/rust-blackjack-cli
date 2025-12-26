@@ -13,8 +13,8 @@ use crate::{deck::Deck, hand::*};
 /// The Game struct contains all data that needs to be managed
 pub struct Game {
     deck: Deck,
-    player_hand: Hand,
-    dealer_hand: Hand,
+    pub player_hand: Hand,
+    pub dealer_hand: Hand,
     pub bankroll: u32,
     pub bet: u32,
     pub i: u16,
