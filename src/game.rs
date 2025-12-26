@@ -13,8 +13,8 @@ use crate::{deck::Deck, hand::*};
 /// The Game struct contains all data that needs to be managed
 pub struct Game {
     deck: Deck,
-    player: Hand,
-    dealer: Hand,
+    player_hand: Hand,
+    dealer_hand: Hand,
     pub bankroll: u32,
     pub bet: u32,
     pub i: u16,
@@ -33,14 +33,14 @@ impl Game {
         deck.shuffle();
 
         // create both player hands
-        let player = Hand::new();
-        let dealer = Hand::new();
+        let player_hand = Hand::new();
+        let dealer_hand = Hand::new();
 
         // return Game
         Game {
             deck,
-            player,
-            dealer,
+            player_hand,
+            dealer_hand,
             bankroll: starting_bankroll,
             bet: 0,
             i: 0,
@@ -52,12 +52,12 @@ impl Game {
     /// Deals cards to hands
     pub fn initial_deal(&mut self) {
         // clear hands
-        self.player.clear();
-        self.dealer.clear();
+        self.player_hand.clear();
+        self.dealer_hand.clear();
 
         // deal cards
-        self.player.add_card(self.deck.deal().unwrap());
-        self.dealer.add_card(self.deck.deal().unwrap());
-        self.player.add_card(self.deck.deal().unwrap());
+        self.player_hand.add_card(self.deck.deal().unwrap());
+        self.dealer_hand.add_card(self.deck.deal().unwrap());
+        self.player_hand.add_card(self.deck.deal().unwrap());
     }
 }
