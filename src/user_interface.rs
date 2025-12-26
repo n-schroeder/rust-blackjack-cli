@@ -41,7 +41,9 @@ pub fn get_bet(bankroll:u32) -> u32 {
         // prompt player
         print!("Enter your bet amount: $");
         // read input
-        io::stdin().read_line(&mut input);
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read bet");
         // attempt parse
         bet = match input.trim().parse() {
             // if result is good, return num
