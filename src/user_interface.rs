@@ -37,36 +37,34 @@ pub fn get_bet(bankroll:u32) -> u32 {
         // declare input var
         let mut input: String = String::new();
         let bet: u32;
+
         // prompt player
         print!("Enter your bet amount: $");
-        // real input
-        io::stdin()
-            .read_line(&mut input)
-            .expect("Failed to read bet");
-
+        // read input
+        io::stdin().read_line(&mut input);
         // attempt parse
         bet = match input.trim().parse() {
             // if result is good, return num
             Ok(num) => num,
             Err(_) => {
-                println!("That was not a number!");
+                println!("That was not a number!\n");
                 continue
             }
         };
 
         // verify valid bet
         if bet > bankroll {
-            println!("Bad bet. Insufficient funds");
+            println!("Bad bet. Insufficient funds\n");
             continue
         }
         if bet == 0 {
-            println!("You can't play for free ;)");
+            println!("You can't play for free ;)\n");
             continue
         }
         if bet == 67 {
             println!("chud");
         }
-        
+
         // exit betting loop
         return bet;
     }
