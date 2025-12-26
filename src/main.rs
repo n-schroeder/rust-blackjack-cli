@@ -22,4 +22,7 @@ fn main() {
 
     // initial deal
     game.initial_deal();
+
+    // show hands
+    ui::show_hands(game.player_hand, game.dealer_hand);
 }
