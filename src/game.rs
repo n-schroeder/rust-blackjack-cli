@@ -17,7 +17,7 @@ pub struct Game {
     dealer: Hand,
     pub bankroll: u32,
     pub bet: u32,
-    i: u16,
+    pub i: u16,
 }
 
 /// Game implementations
