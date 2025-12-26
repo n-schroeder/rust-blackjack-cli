@@ -6,7 +6,7 @@
 // Imports
 use crate::hand::Hand;
 use colored::Colorize;
-use std::io::{self};
+use std::io::{self, Write};
 
 /// Clears screen and welcomes user based on iteration and bankroll
 pub fn display_header(i: u16, bankroll: u32) {
@@ -42,6 +42,7 @@ pub fn get_bet(bankroll:u32) -> u32 {
         // prompt player
         print!("Enter your bet amount: $");
         // read input
+        io::stdout().flush().expect("Failed to flush stdout");
         io::stdin()
             .read_line(&mut input)
             .expect("Failed to read bet");
