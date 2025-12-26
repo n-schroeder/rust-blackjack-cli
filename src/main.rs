@@ -13,6 +13,7 @@ fn main() {
     // Create new game
     let mut game = Game::new(1000);
 
+    // Session loop to simulate rounds
     'session: loop {
         // Welcome user
         ui::display_header(game.i, game.bankroll);
@@ -24,10 +25,16 @@ fn main() {
         // initial deal
         game.initial_deal();
 
-        // play loop
+        // loop to handle player actions
         loop {
             // show hands
             ui::show_hands(&game.player_hand, &game.dealer_hand);
+
+            // Check for blackjacks
+            if game.player_hand.is_blackjack() { break }
+
+            // Get user decision
+            
         }
     }
 }
