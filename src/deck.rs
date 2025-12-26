@@ -4,7 +4,7 @@ use rand::Rng;
 
 #[derive(Debug)]
  // define Deck struct
- pub struct Deck {
+pub struct Deck {
     pub cards: Vec<Card>,
  }
 
