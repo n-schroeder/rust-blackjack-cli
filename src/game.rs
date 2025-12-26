@@ -49,20 +49,8 @@ impl Game {
 
     /// Initial Deal
     /// 
-    /// First verifies valid bet, then starts round
-    /// by dealing cards to `player` and `dealer`
-    pub fn initial_deal(&mut self, bet: u32) -> Result<(), String> {
-        // verify valid bet
-        if bet == 0 {
-            return Err("You can't play for free ;)".to_string())
-        }
-        if bet > self.bankroll {
-            return Err("Bad Bet. Insufficient Funds".to_string())
-        }
-        
-        // set bet
-        self.bet = bet;
-
+    /// Deals cards to hands
+    pub fn initial_deal(&mut self) {
         // clear hands
         self.player.clear();
         self.dealer.clear();
@@ -71,8 +59,5 @@ impl Game {
         self.player.add_card(self.deck.deal().unwrap());
         self.dealer.add_card(self.deck.deal().unwrap());
         self.player.add_card(self.deck.deal().unwrap());
-        
-        // return success
-        Ok(())
     }
 }
