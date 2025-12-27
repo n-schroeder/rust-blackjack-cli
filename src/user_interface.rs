@@ -97,7 +97,7 @@ pub fn user_hit() -> bool {
         match input.trim().to_lowercase().as_str() {
             "h" | "hit" => return true,
             "s" | "stand" => return false,
-            _ => println!("Invalid Input"),
+            _ => println!("\n**Invalid Input**\n"),
         }
     }
 }
