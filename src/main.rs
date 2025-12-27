@@ -34,8 +34,10 @@ fn main() {
             if game.player_hand.is_blackjack() { break 'user_action }
 
             // Get user decision
-            if !ui::player_hit() { break 'user_action }
             if ui::player_hit() { game.deal_to_player(); }
+            else { break 'user_action }
+
+            // check player bust
             if game.player_bust() { break 'user_action }
         }
 
