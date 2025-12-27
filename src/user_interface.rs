@@ -97,3 +97,68 @@ pub fn player_hit() -> bool {
         }
     }
 }
+
+// show outcome message
+pub fn print_outcome(won: bool, amount: u32) {
+    // define the text and color based on the result
+    let msg = 
+    if won { "YOU WIN!" }
+    else { "YOU LOSE" };
+
+    // helper closure to apply the color dynamically
+    // allows us to apply "red" or "green" to the whole string at once
+    let colorize = |s: String| -> String {
+        if won { s.green().to_string() } else { s.red().to_string() }
+    };
+
+    // print the Box
+    // We format the string FIRST, then colorize the whole thing.
+    println!("{}", colorize("┌──────────────────────────────┐".to_string()));
+    
+    // The Message Row
+    let msg_line = format!("│          {:<12}        │", msg);
+    println!("{}", colorize(msg_line));
+
+    // The Money Row (Using your {:<5} spacing!)
+    // If won, we show "Payout", if lost, we show "Loss"
+    let label = if won { "Payout" } else { "  Loss" }; // padded to match length
+    let money_line = format!("│        {}: ${:<5}        │", label, amount);
+    println!("{}", colorize(money_line));
+
+    println!("{}", colorize("└──────────────────────────────┘".to_string()));
+}
+
+// print push message
+pub fn print_push_message() {
+
+}
+
+// prompt user to play again
+pub fn play_again(bankroll: u32) -> bool {
+    loop {
+        // check balance
+        if bankroll == 0 {
+            println!("{}", "\n\nYou are out of money! You are not useful to us anymore.\n\n".red().bold());
+            return false;
+        }
+        // declare input var
+        let mut input = String::new();
+
+        // prompt user
+        print!("\n\nPlay again? (y/n): ");
+
+        // flush stdout
+        io::stdout().flush().expect("Failed to flush stdout");
+        // read user input
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read user decision");
+
+        // match input with answer and decision
+        match input.trim().to_lowercase().as_str() {
+            "y" | "yes" => return true,
+            "n" | "no" => return false,
+            _ => println!("Invalid Input"),
+        }
+    }
+}
