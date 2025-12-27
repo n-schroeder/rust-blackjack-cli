@@ -26,17 +26,38 @@ fn main() {
         game.initial_deal();
 
         // loop to handle player actions
-        loop {
+        'user_action: loop {
             // show hands
             ui::show_hands(&game.player_hand, &game.dealer_hand);
 
             // Check for blackjacks
-            if game.player_hand.is_blackjack() { break }
+            if game.player_hand.is_blackjack() { break 'user_action }
 
             // Get user decision
-            if ui::user_hit() { game.deal_to_player(); }
-            if !ui::user_hit() { break }
-            if game.user_bust() { break }
+            if !ui::player_hit() { break 'user_action }
+            if ui::player_hit() { game.deal_to_player(); }
+            if game.player_bust() { break 'user_action }
+        }
+
+        // add dealer's downcard
+        game.deal_to_dealer();
+
+        // dealer action loop
+        'dealer_action: loop {
+            // show hands
+            ui::show_hands(&game.player_hand, &game.dealer_hand);
+
+            // check for blackjack
+            if game.dealer_hand.is_blackjack() { break 'dealer_action }
+
+            // deal card to dealer
+            game.deal_to_dealer();
+
+            // check bust
+            if game.dealer_bust() { break 'dealer_action }
+
+            // check if >= 17
+            if game.dealer_hand.value() >= 17 { break 'dealer_action }
         }
     }
 }
