@@ -5,8 +5,6 @@ mod hand;
 mod game;
 mod user_interface;
 
-use std::collections::btree_set;
-
 // Imports
 use game::Game;
 use user_interface as ui;
@@ -71,7 +69,6 @@ fn main() {
             ui::print_outcome(false, game.bet);
             game.bankroll -= game.bet;
         }
-        if game.de
 
         // prompt play again
         if !ui::play_again(game.bankroll) { break 'session }
