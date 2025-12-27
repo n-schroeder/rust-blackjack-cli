@@ -79,3 +79,25 @@ pub fn show_hands(player_hand: &Hand, dealer_hand: &Hand) {
         dealer_hand, dealer_hand.value(),
         player_hand, player_hand.value());
 }
+
+pub fn user_hit() -> bool {
+    loop {
+        // declare input var
+        let mut input = String::new();
+        // prompt user
+        print!("Would you like to (h)it or (s)tand?: ");
+
+        // flush and read user decision
+        io::stdout().flush().unwrap();
+        io::stdin()
+            .read_line(&mut input)
+            .unwrap();
+
+        // match input with user decision
+        match input.trim().to_lowercase().as_str() {
+            "h" | "hit" => return true,
+            "s" | "stand" => return false,
+            _ => println!("Invalid Input"),
+        }
+    }
+}
