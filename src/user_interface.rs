@@ -65,9 +65,6 @@ pub fn get_bet(bankroll:u32) -> u32 {
             println!("You can't play for free ;)\n");
             continue
         }
-        if bet == 67 {
-            println!("chud");
-        }
 
         // exit betting loop
         return bet;
@@ -80,13 +77,12 @@ pub fn show_hands(player_hand: &Hand, dealer_hand: &Hand) {
         player_hand, player_hand.value());
 }
 
-pub fn user_hit() -> bool {
+pub fn player_hit() -> bool {
     loop {
         // declare input var
         let mut input = String::new();
         // prompt user
         print!("Would you like to (h)it or (s)tand?: ");
-
         // flush and read user decision
         io::stdout().flush().unwrap();
         io::stdin()
