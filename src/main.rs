@@ -5,6 +5,8 @@ mod hand;
 mod game;
 mod user_interface;
 
+use std::collections::btree_set;
+
 // Imports
 use game::Game;
 use user_interface as ui;
@@ -26,40 +28,52 @@ fn main() {
         game.initial_deal();
 
         // loop to handle player actions
-        'user_action: loop {
+        loop {
             // show hands
             ui::show_hands(&game.player_hand, &game.dealer_hand);
 
             // Check for blackjacks
-            if game.player_hand.is_blackjack() { break 'user_action }
+            if game.player_hand.is_blackjack() { break }
 
             // Get user decision
-            if ui::player_hit() { game.deal_to_player(); }
-            else { break 'user_action }
+            if ui::player_hit() {
+                game.deal_to_player(); 
+                continue;
+            }
 
             // check player bust
-            if game.player_bust() { break 'user_action }
-        }
+            if game.player_bust() { break }
 
-        // add dealer's downcard
-        game.deal_to_dealer();
+            // add dealer's downcard
+            game.deal_to_dealer();
 
-        // dealer action loop
-        'dealer_action: loop {
+            // show dealer hitting
+            println!("\n==== Dealer hits ====");
             // show hands
             ui::show_hands(&game.player_hand, &game.dealer_hand);
 
             // check for blackjack
-            if game.dealer_hand.is_blackjack() { break 'dealer_action }
+            if game.dealer_hand.is_blackjack() { break }
 
             // deal card to dealer
             game.deal_to_dealer();
 
             // check bust
-            if game.dealer_bust() { break 'dealer_action }
+            if game.dealer_bust() { break }
 
             // check if >= 17
-            if game.dealer_hand.value() >= 17 { break 'dealer_action }
+            if game.dealer_hand.value() >= 17 { break }
         }
+
+        // win decision
+        // player bust
+        if game.player_bust() || game.dealer_hand.value() > game.player_hand.value() {
+            ui::print_outcome(false, game.bet);
+            game.bankroll -= game.bet;
+        }
+        if game.de
+
+        // prompt play again
+        if !ui::play_again(game.bankroll) { break 'session }
     }
 }
