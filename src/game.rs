@@ -65,5 +65,12 @@ impl Game {
         self.player_hand.add_card(self.deck.deal().unwrap());
     }
 
-    pub fn user_bust(&self) -> bool { self.player_hand.value() > 21 }
+    pub fn deal_to_dealer(&mut self) {
+        self.dealer_hand.add_card(self.deck.deal().unwrap());
+    }
+
+    pub fn player_bust(&self) -> bool { self.player_hand.value() > 21 }
+
+    pub fn dealer_bust(&self) -> bool { self.dealer_hand.value() > 21 }
+
 }
