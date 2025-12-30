@@ -8,6 +8,16 @@
 // imports
 use crate::{deck::Deck, hand::*};
 
+/// Round Result enum
+/// 
+/// Contains all possible round results
+pub enum RoundResult {
+    PlayerWin,
+    PlayerBlackjack, // Distinct because it pays 3:2
+    DealerWin,
+    Push,
+}
+
 /// Game struct
 /// 
 /// The Game struct contains all data that needs to be managed
