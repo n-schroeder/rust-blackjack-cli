@@ -83,4 +83,29 @@ impl Game {
 
     pub fn dealer_bust(&self) -> bool { self.dealer_hand.value() > 21 }
 
+    // Win Decision Logic
+    pub fn determine_winner(&self) -> RoundResult {
+        // Check for bust
+        if self.player_bust() {
+            return RoundResult::DealerWin
+        } else if self.dealer_bust() {
+            return RoundResult::PlayerWin
+        } 
+        
+        // Check for blackjacks
+        else if self.player_hand.is_blackjack() && self.dealer_hand.is_blackjack() {
+            return RoundResult::Push
+        } else if self.player_hand.is_blackjack() {
+            return RoundResult::PlayerBlackjack
+        } 
+
+        // Compare hand values
+        else if self.player_hand.value() > self.dealer_hand.value() {
+            return RoundResult::PlayerWin
+        } else if self.player_hand.value() < self.dealer_hand.value() {
+            return RoundResult::DealerWin
+        } else {
+            return RoundResult::Push
+        }
+    }
 }
