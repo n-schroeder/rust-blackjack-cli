@@ -9,6 +9,8 @@ mod user_interface;
 use game::Game;
 use user_interface as ui;
 
+use crate::game::RoundResult;
+
 fn main() {
     // Create new game
     let mut game = Game::new(1000);
@@ -69,6 +71,28 @@ fn main() {
                 // check bust
                 if game.dealer_bust() { break 'gameplay }
             }
+        }
+
+        // Determine winner and handle payout logic
+        let result = game.determine_winner();
+
+        match result {
+            RoundResult::PlayerWin => {
+                // print player win
+                game.bankroll += game.bet;
+            },
+            RoundResult::DealerWin => {
+                // print player loss
+                game.bankroll -= game.bet
+            },
+            RoundResult::PlayerBlackjack => {
+                // change win amount
+                let payout: u32 = (game.bet * 3) / 2;
+                // print blackjack message
+            },
+            RoundResult::Push => {
+                // print push message
+            },
         }
 
         // prompt play again
