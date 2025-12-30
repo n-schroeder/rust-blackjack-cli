@@ -129,8 +129,26 @@ pub fn print_outcome(won: bool, amount: u32) {
 }
 
 // print push message
-pub fn print_push_message() {
+pub fn print_push() {
+    // push message
+    let msg: &str = "PUSH";
 
+    // color helper method
+    let colorize = |s: String| -> String {
+        s.blue().to_string()
+    };
+
+    println!("{}", colorize("┌──────────────────────────────┐".to_string()));
+    
+    // message row
+    let msg_line = format!("│          {:<12}        │", msg);
+    println!("{}", colorize(msg_line));
+
+    // money line
+    let money_line = format!("│          MONEY BACK          │");
+    println!("{}", colorize(money_line));
+
+    println!("{}", colorize("└──────────────────────────────┘".to_string()));
 }
 
 // prompt user to play again
