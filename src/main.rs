@@ -33,14 +33,14 @@ fn main() {
             // Check for blackjacks
             if game.player_hand.is_blackjack() { break }
 
+            // check player bust
+            if game.player_bust() { break }
+
             // Get user decision
-            if ui::player_hit() {
+            if ui::player_hits() {
                 game.deal_to_player(); 
                 continue;
             }
-
-            // check player bust
-            if game.player_bust() { break }
 
             // add dealer's downcard
             game.deal_to_dealer();

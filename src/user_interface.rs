@@ -77,7 +77,7 @@ pub fn show_hands(player_hand: &Hand, dealer_hand: &Hand) {
         player_hand, player_hand.value());
 }
 
-pub fn player_hit() -> bool {
+pub fn player_hits() -> bool {
     loop {
         // declare input var
         let mut input = String::new();
