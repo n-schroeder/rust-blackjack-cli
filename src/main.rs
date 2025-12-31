@@ -30,6 +30,7 @@ fn main() {
         // loop to handle player actions
         'gameplay: loop {
             // show hands
+            println!();
             ui::show_hands(&game.player_hand, &game.dealer_hand);
 
             // Check for blackjacks
@@ -42,6 +43,7 @@ fn main() {
                 // Get user decision and show hands upon user hit
                 if ui::player_hits() {
                     game.deal_to_player();
+                    println!();
                     ui::show_hands(&game.player_hand, &game.dealer_hand);
                     continue;
                 }
@@ -52,14 +54,12 @@ fn main() {
             game.deal_to_dealer();
             
             // show dealer turn and hand
-            println!("\n==== Dealer's Turn ====");
+            println!("\n\n=== Dealer's Turn ===\n\n");
+            print!("    ");
             ui::show_hands(&game.player_hand, &game.dealer_hand);
 
             // dealer turn loop
             loop {
-                // show hands
-                
-
                 // check for blackjack
                 if game.dealer_hand.is_blackjack() { break 'gameplay }
 
@@ -67,8 +67,9 @@ fn main() {
                 if game.dealer_hand.value() >= 17 { break 'gameplay }
 
                 // deal card to dealer and show hands
-                println!("\n==== Dealer Hits ====");
+                println!("\n    Dealer hits...");
                 game.deal_to_dealer();
+                print!("    ");
                 ui::show_hands(&game.player_hand, &game.dealer_hand);
 
                 // check bust
@@ -78,7 +79,7 @@ fn main() {
 
         // print newline
         println!();
-        
+
         // Determine winner and handle payout logic
         let result = game.determine_winner();
 
