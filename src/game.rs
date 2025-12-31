@@ -99,7 +99,9 @@ impl Game {
             return RoundResult::Push
         } else if self.player_hand.is_blackjack() {
             return RoundResult::PlayerBlackjack
-        } 
+        } else if self.dealer_hand.is_blackjack() {
+            return RoundResult::DealerWin
+        }
 
         // Compare hand values
         else if self.player_hand.value() > self.dealer_hand.value() {
