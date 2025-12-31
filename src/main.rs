@@ -51,13 +51,14 @@ fn main() {
             // add dealer's downcard
             game.deal_to_dealer();
             
-            // show dealer turn
+            // show dealer turn and hand
             println!("\n==== Dealer's Turn ====");
+            ui::show_hands(&game.player_hand, &game.dealer_hand);
 
             // dealer turn loop
             loop {
                 // show hands
-                ui::show_hands(&game.player_hand, &game.dealer_hand);
+                
 
                 // check for blackjack
                 if game.dealer_hand.is_blackjack() { break 'gameplay }
@@ -65,9 +66,10 @@ fn main() {
                 // check if >= 17
                 if game.dealer_hand.value() >= 17 { break 'gameplay }
 
-                // deal card to dealer
+                // deal card to dealer and show hands
                 println!("\n==== Dealer Hits ====");
                 game.deal_to_dealer();
+                ui::show_hands(&game.player_hand, &game.dealer_hand);
 
                 // check bust
                 if game.dealer_bust() { break 'gameplay }
