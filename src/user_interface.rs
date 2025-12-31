@@ -72,7 +72,7 @@ pub fn get_bet(bankroll:u32) -> u32 {
 }
 
 pub fn show_hands(player_hand: &Hand, dealer_hand: &Hand) {
-    println!("\nDealer: {} ({})    Player: {} ({})\n",
+    println!("Dealer: {} ({})    Player: {} ({})\n",
         dealer_hand, dealer_hand.value(),
         player_hand, player_hand.value());
 }
@@ -131,7 +131,7 @@ pub fn print_outcome(won: bool, amount: u32) {
 // print push message
 pub fn print_push() {
     // push message
-    let msg: &str = "PUSH";
+    let msg: &str = "   PUSH   ";
 
     // color helper method
     let colorize = |s: String| -> String {
