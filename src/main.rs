@@ -39,9 +39,10 @@ fn main() {
                 // check player bust
                 if game.player_bust() { break 'gameplay }
 
-                // Get user decision
+                // Get user decision and show hands upon user hit
                 if ui::player_hits() {
-                    game.deal_to_player(); 
+                    game.deal_to_player();
+                    ui::show_hands(&game.player_hand, &game.dealer_hand);
                     continue;
                 }
                 else { break 'player_turn }
