@@ -11,6 +11,7 @@ use crate::{deck::Deck, hand::*};
 /// Round Result enum
 /// 
 /// Contains all possible round results
+#[derive(Debug, PartialEq)]
 pub enum RoundResult {
     PlayerWin,
     PlayerBlackjack, // Distinct because it pays 3:2
@@ -21,6 +22,7 @@ pub enum RoundResult {
 /// Game struct
 /// 
 /// The Game struct contains all data that needs to be managed
+#[derive(Debug, PartialEq)]
 pub struct Game {
     deck: Deck,
     pub player_hand: Hand,
@@ -107,5 +109,64 @@ impl Game {
         } else {
             return RoundResult::Push
         }
+    }
+}
+
+#[cfg(test)]
+
+mod test {
+    use crate::card::*;
+
+    use super::*;
+
+    #[test]
+    fn test_player_blackjack_win() {
+        // create new game
+        let mut game = Game::new(1000);
+
+        // give player blackjack
+        game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::ACE));
+        game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::TEN));
+
+        // give dealer 21, but !blackjack
+        game.dealer_hand.add_card(Card::new(Suit::DIAMONDS, Rank::TEN));
+        game.dealer_hand.add_card(Card::new(Suit::DIAMONDS, Rank::TEN));
+        game.dealer_hand.add_card(Card::new(Suit::DIAMONDS, Rank::ACE));
+
+        // verify player win
+        assert_eq!(game.determine_winner(), RoundResult::PlayerBlackjack);
+    }
+
+    #[test]
+    fn test_dealer_blackjack_win() {
+        // create new game
+        let mut game = Game::new(1000);
+
+        // give player 21, but !blackjack
+        game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::TEN));
+        game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::TEN));
+        game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::ACE));
+
+        // give dealer blackjack
+        game.dealer_hand.add_card(Card::new(Suit::DIAMONDS, Rank::ACE));
+        game.dealer_hand.add_card(Card::new(Suit::DIAMONDS, Rank::TEN));
+
+        // verify dealer win
+        assert_eq!(game.determine_winner(), RoundResult::DealerWin);
+    }
+
+    #[test]
+    fn test_push() {
+        let mut game = Game::new(1000);
+        
+        // Both have 20
+        game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::TEN));
+        game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::TEN));
+
+        game.dealer_hand.add_card(Card::new(Suit::DIAMONDS, Rank::TEN));
+        game.dealer_hand.add_card(Card::new(Suit::DIAMONDS, Rank::TEN));
+
+        let result = game.determine_winner();
+        assert!(matches!(result, RoundResult::Push));
     }
 }
