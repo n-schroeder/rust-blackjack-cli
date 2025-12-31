@@ -102,7 +102,7 @@ pub fn player_hits() -> bool {
 pub fn print_outcome(won: bool, amount: u32) {
     // define the text and color based on the result
     let msg = 
-    if won { "YOU WIN!" }
+    if won { " YOU WIN!" }
     else { "YOU LOSE" };
 
     // helper closure to apply the color dynamically
