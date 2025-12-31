@@ -76,6 +76,9 @@ fn main() {
             }
         }
 
+        // print newline
+        println!();
+        
         // Determine winner and handle payout logic
         let result = game.determine_winner();
 
