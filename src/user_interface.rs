@@ -151,6 +151,32 @@ pub fn print_push() {
     println!("{}", colorize("└──────────────────────────────┘".to_string()));
 }
 
+// blackjack message
+pub fn print_blackjack (amount: u32) {
+    // define the text and color based on the result
+    let msg = "BLACKJACK!";
+
+    // helper closure to apply the color dynamically
+    // allows us to apply "red" or "green" to the whole string at once
+    let colorize = |s: String| -> String { s.green().to_string()};
+
+    // print the Box
+    // We format the string FIRST, then colorize the whole thing.
+    println!("{}", colorize("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$".to_string()));
+    
+    // The Message Row
+    let msg_line = format!("$          {:<12}        $", msg);
+    println!("{}", colorize(msg_line));
+
+    // The Money Row (Using your {:<5} spacing!)
+    // If won, we show "Payout", if lost, we show "Loss"
+    let label = "Payout";
+    let money_line = format!("$        {}: ${:<5}        $", label, amount);
+    println!("{}", colorize(money_line));
+
+    println!("{}", colorize("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$".to_string()));
+}
+
 // prompt user to play again
 pub fn play_again(bankroll: u32) -> bool {
     loop {
