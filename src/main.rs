@@ -79,19 +79,23 @@ fn main() {
         match result {
             RoundResult::PlayerWin => {
                 // print player win
+                ui::print_outcome(true, game.bet);
                 game.bankroll += game.bet;
             },
             RoundResult::DealerWin => {
                 // print player loss
+                ui::print_outcome(false, game.bet);
                 game.bankroll -= game.bet
             },
             RoundResult::PlayerBlackjack => {
                 // change win amount
                 let payout: u32 = (game.bet * 3) / 2;
                 // print blackjack message
+                ui::print_blackjack(payout);
             },
             RoundResult::Push => {
                 // print push message
+                ui::print_push();
             },
         }
 
