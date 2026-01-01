@@ -11,7 +11,7 @@ impl Hand {
     // constructor
     pub fn new() -> Self {
         // create vector to hold Card objects
-        let mut cards = Vec::new();
+        let cards = Vec::new();
 
         // Hand is an object containing a vector that holds Card objects
         Hand { cards }
