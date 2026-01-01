@@ -175,7 +175,6 @@ mod test {
     #[test]
     fn test_player_bust() {
         let mut game = Game::new(1000);
-
         // give player bust hand
         game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::TEN));
         game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::KING));
@@ -187,5 +186,36 @@ mod test {
 
         // verify dealer win
         assert_eq!(game.determine_winner(), RoundResult::DealerWin);
+    }
+
+    #[test]
+    fn test_dealer_bust() {
+        let mut game = Game::new(1000);
+        // give player valid hand
+        game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::NINE));
+        game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::SEVEN));
+
+        // give dealer bust hand
+        game.dealer_hand.add_card(Card::new(Suit::DIAMONDS, Rank::TEN));
+        game.dealer_hand.add_card(Card::new(Suit::DIAMONDS, Rank::KING));
+        game.dealer_hand.add_card(Card::new(Suit::DIAMONDS, Rank::TWO));
+
+        // verify player win
+        assert_eq!(game.determine_winner(), RoundResult::PlayerWin);
+    }
+
+    #[test]
+    fn test_backjack_push() {
+        let mut game = Game::new(1000);
+        
+        // Both have blackjack
+        game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::ACE));
+        game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::KING));
+
+        game.dealer_hand.add_card(Card::new(Suit::DIAMONDS, Rank::ACE));
+        game.dealer_hand.add_card(Card::new(Suit::DIAMONDS, Rank::QUEEN));
+
+        let result = game.determine_winner();
+        assert!(matches!(result, RoundResult::Push));
     }
 }
