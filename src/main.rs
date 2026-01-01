@@ -110,3 +110,32 @@ fn main() {
         if !ui::play_again(game.bankroll) { break 'session }
     }
 }
+
+#[cfg(test)]
+
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_game_initialization() {
+        let game = Game::new(500);
+        assert_eq!(game.bankroll, 500);
+        assert_eq!(game.bet, 0);
+        assert_eq!(game.player_hand.value(), 0);
+        assert_eq!(game.dealer_hand.value(), 0);
+    }
+
+    #[test]
+    fn test_blackjack_payout() {
+        let mut game = Game::new(1000);
+        game.bet = 200;
+        let result = RoundResult::PlayerBlackjack;
+        match result {
+            RoundResult::PlayerBlackjack => {
+                let payout: u32 = (game.bet * 3) / 2;
+                assert_eq!(payout, 300);
+            },
+            _ => panic!("Expected PlayerBlackjack result"),
+        }
+    }
+}
