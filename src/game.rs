@@ -171,4 +171,21 @@ mod test {
         let result = game.determine_winner();
         assert!(matches!(result, RoundResult::Push));
     }
+
+    #[test]
+    fn test_player_bust() {
+        let mut game = Game::new(1000);
+
+        // give player bust hand
+        game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::TEN));
+        game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::KING));
+        game.player_hand.add_card(Card::new(Suit::DIAMONDS, Rank::TWO));
+
+        // give dealer valid hand
+        game.dealer_hand.add_card(Card::new(Suit::DIAMONDS, Rank::NINE));
+        game.dealer_hand.add_card(Card::new(Suit::DIAMONDS, Rank::SEVEN));
+
+        // verify dealer win
+        assert_eq!(game.determine_winner(), RoundResult::DealerWin);
+    }
 }
