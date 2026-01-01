@@ -129,11 +129,8 @@ impl Card {
             rank,
         }
     }
+    
     // getter methods
-    pub fn suit(&self) -> &Suit {
-        &self.suit
-    }
-
     pub fn rank(&self) -> &Rank {
         &self.rank
     }
