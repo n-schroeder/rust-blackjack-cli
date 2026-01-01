@@ -1,5 +1,5 @@
 // imports
-use crate::card::{Suit, Rank, Card};
+use crate::card::{Rank, Card};
 use std::fmt;
 
 #[derive(Debug, PartialEq, Clone)]
@@ -81,6 +81,7 @@ impl fmt::Display for Hand {
 
 mod tests {
     use super::*;
+    use crate::card::Suit;
 
     // test add_card()
     # [test]
