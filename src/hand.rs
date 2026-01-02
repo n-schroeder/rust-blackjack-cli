@@ -1,38 +1,42 @@
-// imports
 use crate::card::{Rank, Card};
 use std::fmt;
 
+/// Hand struct
+/// 
+/// Uses vector of `Cards` a player's or dealer's hand containing multiple playing cards
 #[derive(Debug, PartialEq, Clone)]
 pub struct Hand {
     pub cards: Vec<Card>,
 }
 
 impl Hand {
-    /// Constructior
+    /// Constructor
     /// 
-    /// explain
+    /// Creates a new, empty hand that can hold multiple cards
     pub fn new() -> Self {
         let cards = Vec::new();
 
         Hand { cards }
     }
 
-    /// explain
+    /// Add a card to the hand
     pub fn add_card(&mut self, card: Card) {
         self.cards.push(card);
     }
 
-    /// explain
+    /// Clear all cards from the hand
     pub fn clear(&mut self) {
         self.cards.clear();
     }
 
-    /// explain
+    /// Check if the hand is a blackjack (two cards totaling 21)
     pub fn is_blackjack(&self) -> bool {
         self.cards.len() == 2 && self.value() == 21
     }
 
-    /// explain
+    /// Calculate the total value of the hand
+    /// 
+    /// Accounts for Ace being worth 1 or 11
     pub fn value(&self) -> u8 {
         let mut total_value: u8 = 0;
         let mut ace_count: u8 = 0;
@@ -54,9 +58,6 @@ impl Hand {
     }
 }
 
-/// Format print for Hand
-/// 
-/// explain
 impl fmt::Display for Hand {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         for card in &self.cards {
@@ -73,6 +74,8 @@ mod tests {
     use crate::card::Suit;
 
     /// Test `add_card()` method
+    /// 
+    /// Adds a card to the hand and asserts that the hand length increases and the card is present
     # [test]
     fn test_add_card() {
         let mut h = Hand::new();
@@ -85,6 +88,8 @@ mod tests {
     }
 
     /// Test `value()` calculation
+    /// 
+    /// Adds multiple cards, including Aces, and asserts that the hand value is calculated correctly
     # [test]
     fn test_value_calculation() {
         let mut h = Hand::new();
