@@ -1,3 +1,8 @@
+//! Hand module
+//! 
+//! This module contains the `Hand` struct and its associated methods
+//! for managing a player's or dealer's hand in blackjack.
+
 use crate::card::{Rank, Card};
 use std::fmt;
 

@@ -1,3 +1,8 @@
+//! Deck module
+//! 
+//! This module contains the `Deck` struct and its associated methods
+//! for managing a deck of playing cards in blackjack.
+
 use crate::card::{Suit, Rank, Card};
 use rand::Rng;
 

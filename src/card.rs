@@ -1,3 +1,8 @@
+//! Card module
+//! 
+//! This module contains the `Card`, `Suit`, and `Rank` structs/enums
+//! for representing playing cards in blackjack.
+
 use std::fmt;
 use colored::*;
 
