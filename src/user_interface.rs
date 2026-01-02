@@ -1,7 +1,7 @@
 //! User Interface
 //! 
-//! I will call methods from this module to prompt, gain information from, and display information to the user.
-//! This module is meant to process and validate inputs and pass it off.
+//! Methods from this module prompt, gain information from, and display information to the user.
+//! This module is meant to process and validate inputs, then pass them off.
 
 use crate::hand::Hand;
 use colored::Colorize;
@@ -62,12 +62,14 @@ pub fn get_bet(bankroll:u32) -> u32 {
     }
 }
 
+/// Show player and dealer hands
 pub fn show_hands(player_hand: &Hand, dealer_hand: &Hand) {
     println!("Dealer: {} ({})    Player: {} ({})\n",
         dealer_hand, dealer_hand.value(),
         player_hand, player_hand.value());
 }
 
+/// Prompt user for hit or stand decision. Returns true for hit, false for stand
 pub fn player_hits() -> bool {
     loop {
         let mut input = String::new();
@@ -87,7 +89,7 @@ pub fn player_hits() -> bool {
     }
 }
 
-/// show outcome message
+/// Print outcome message, either win or loss, with amount
 pub fn print_outcome(won: bool, amount: u32) {
     let msg = 
     if won { " YOU WIN!" }
@@ -109,7 +111,7 @@ pub fn print_outcome(won: bool, amount: u32) {
     println!("{}", colorize("└──────────────────────────────┘".to_string()));
 }
 
-/// print push message
+/// Print push message
 pub fn print_push() {
     let msg: &str = "   PUSH   ";
 
@@ -128,7 +130,7 @@ pub fn print_push() {
     println!("{}", colorize("└──────────────────────────────┘".to_string()));
 }
 
-/// blackjack message
+/// Blackjack message. Print blackjack message with payout amount
 pub fn print_blackjack (amount: u32) {
     let msg = "BLACKJACK!";
 
@@ -146,7 +148,7 @@ pub fn print_blackjack (amount: u32) {
     println!("{}", colorize("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$".to_string()));
 }
 
-/// prompt user to play again
+/// Prompt user to play again, returns true for yes, false for no
 pub fn play_again(bankroll: u32) -> bool {
     loop {
         if bankroll == 0 {
