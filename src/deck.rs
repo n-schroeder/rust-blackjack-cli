@@ -106,10 +106,10 @@ mod tests {
     /// and asserts that the deck size is reset to 51 cards.
     fn test_deal_with_replenishment() {
         let mut d = Deck::new();
-        for _ in 0..33 {
+        for _ in 0..32 {
             d.deal();
         }
-        assert_eq!(d.cards.len(), 19);
+        assert_eq!(d.cards.len(), 20);
         d.deal();
         assert_eq!(d.cards.len(), 51);
     }
