@@ -2,6 +2,8 @@ use std::fmt;
 use colored::*;
 
 /// Suit enum
+/// 
+/// Define the four suits in a standard deck of cards
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Suit {
     HEARTS,
@@ -11,7 +13,7 @@ pub enum Suit {
 }
 
 impl Suit {
-    /// explain
+    /// Returns reference to all possible suits
     pub fn all() -> &'static [Suit] {
         &[
             Suit::HEARTS,
@@ -21,8 +23,10 @@ impl Suit {
     }
 }
 
-/// format print for Suit
 impl fmt::Display for Suit {
+    /// Format print for Suit
+    /// 
+    /// Matches suit to corresponding symbol
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let symbol = match self {
             Suit::HEARTS => "♥".red(),
@@ -34,7 +38,9 @@ impl fmt::Display for Suit {
     }
 }
 
-/// Create Rank enum
+/// Rank enum
+/// 
+/// Define the ranks in a standard deck of cards
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Rank {
     TWO,
@@ -53,7 +59,9 @@ pub enum Rank {
 }
 
 impl Rank {
-    /// explain
+    /// Match rank to its corresponding integer value
+    /// 
+    /// Note: `Ace` is valued at 11 here; `Hand` logic will adjust as needed
     pub fn value(&self) -> u8 {
         match self {
             Rank::TWO => 2,
@@ -72,7 +80,7 @@ impl Rank {
         }
     }
 
-    /// explain
+    /// Returns reference to all possible ranks
     pub fn all() -> &'static [Rank] {
         &[
             Rank::TWO,
@@ -93,7 +101,6 @@ impl Rank {
 }
 
 impl fmt::Display for Rank {
-    /// explain
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let symbol = match self {
             Rank::TWO => "2",
@@ -116,7 +123,7 @@ impl fmt::Display for Rank {
 
 /// Card struct
 /// 
-/// explain
+/// Represents a single card in a standard deck, each with a unique suit and rank
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Card {
     suit: Suit,
@@ -125,6 +132,8 @@ pub struct Card {
 
 impl Card {
     /// Constructor
+    /// 
+    /// Creates a new `Card` with specified suit and rank
     pub fn new(suit: Suit, rank: Rank) -> Card {
         Card {
             suit,
@@ -132,19 +141,18 @@ impl Card {
         }
     }
 
-    /// explain
+    /// Returns a reference to the rank of the card
     pub fn rank(&self) -> &Rank {
         &self.rank
     }
 
-    /// explain
+    /// Returns the integer value of the card
     pub fn value(&self) -> u8 {
         self.rank.value()
     }
 }
 
 impl fmt::Display for Card {
-    /// explain
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}{}", self.rank, self.suit)
     }
