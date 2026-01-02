@@ -13,9 +13,8 @@ impl Deck {
     /// Constructor
     /// explain
     pub fn new() -> Self {
-        // create vector to store cards
         let mut cards = Vec::with_capacity(52);
-        // loop through suits and ranks to populate cards vector
+
         for suit in Suit::all() {
             for rank in Rank::all() {
                 cards.push(Card::new(*suit, *rank));
@@ -45,12 +44,11 @@ impl Deck {
 mod tests {
     use super::*;
 
+    /// explain
     # [test]
     fn test_deck_initialization() {
-        // setup
         let d = Deck::new();
 
-        // test using assertion
         assert_eq!(d.cards.len(), 52);
     }
 
@@ -75,7 +73,7 @@ mod tests {
         // must manually test using cargo test -- --nocapture
     }
 
-    /// Test deal method
+    /// Test `deal()` method
     /// 
     /// Creates new deck, deals one card, and compares to expected card.
     # [test]

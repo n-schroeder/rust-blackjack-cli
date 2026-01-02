@@ -8,68 +8,57 @@ pub struct Hand {
 }
 
 impl Hand {
-    // constructor
+    /// Constructior
+    /// 
+    /// explain
     pub fn new() -> Self {
-        // create vector to hold Card objects
         let cards = Vec::new();
 
-        // Hand is an object containing a vector that holds Card objects
         Hand { cards }
     }
 
-    // method to add Card to Hand
+    /// explain
     pub fn add_card(&mut self, card: Card) {
-        // push Card to cards
         self.cards.push(card);
     }
 
-    // clear hand
+    /// explain
     pub fn clear(&mut self) {
         self.cards.clear();
     }
 
-    // check for blackjack
+    /// explain
     pub fn is_blackjack(&self) -> bool {
         self.cards.len() == 2 && self.value() == 21
     }
 
-    // calculate Hand value
+    /// explain
     pub fn value(&self) -> u8 {
-        // declare vars
         let mut total_value: u8 = 0;
         let mut ace_count: u8 = 0;
 
-        // iterate through Cards in Hand
         for c in &self.cards {
-            // add value of card to total_value
             total_value += c.value();
             
-            // if ace, increment ace_count
             if c.rank() == &Rank::ACE {
                 ace_count += 1;
             }
         }
 
-        // adjust for bust
         while total_value > 21 && ace_count > 0 {
-            // decrement total_value by 10
             total_value -= 10;
-            // decrement ace count by 1
             ace_count -= 1;
         }
 
-        // return total_value
         total_value
     }
 }
 
 /// Format print for Hand
 /// 
-/// parameters: reference to self (Hand), mutable reference to format
-/// return type: the result that should be printed to the screen
+/// explain
 impl fmt::Display for Hand {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        // for each card in the cards vector in the hand
         for card in &self.cards {
             write!(f, "[{}]", card)?;
         }
@@ -83,46 +72,37 @@ mod tests {
     use super::*;
     use crate::card::Suit;
 
-    // test add_card()
+    /// Test `add_card()` method
     # [test]
     fn test_add_card() {
-        // create new Hand and Card
         let mut h = Hand::new();
         let c = Card::new(Suit::SPADES, Rank::ACE);
 
-        // add Card to Hand
         h.add_card(c);
 
-        // affirm that h: Hand has length of 1
         assert_eq!(h.cards.len(), 1);
-
-        // affirm that Hand contains ace of spades
         assert_eq!(h.cards[0], c);
     }
 
-    // test value calculation
+    /// Test `value()` calculation
     # [test]
     fn test_value_calculation() {
-        // create Hands
         let mut h = Hand::new();
-        // create Cards
+
         let jack = Card::new(Suit::CLUBS, Rank::JACK);
         let ace = Card::new(Suit::HEARTS, Rank::ACE);
         let six = Card::new(Suit::DIAMONDS, Rank::SIX);
 
-        // test base calculation
         h.add_card(jack);
         h.add_card(ace);
 
         assert_eq!(h.value(), 21);
         assert_eq!(h.is_blackjack(), true);
 
-        // test bust adjustment with single ace
         h.add_card(six);
 
         assert_eq!(h.value(), 17);
 
-        // test bust adjustment with multiple aces
         h.add_card(ace);
 
         assert_eq!(h.value(), 18);
