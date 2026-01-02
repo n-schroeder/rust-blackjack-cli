@@ -1,4 +1,4 @@
-//! Deck module
+//! # Deck module
 //! 
 //! This module contains the `Deck` struct and its associated methods
 //! for managing a deck of playing cards in blackjack.
@@ -6,8 +6,6 @@
 use crate::card::{Suit, Rank, Card};
 use rand::Rng;
 
-/// Deck struct
-/// 
 /// Represents a deck containing playing cards
 #[derive(Debug, PartialEq, Clone)]
 pub struct Deck {
@@ -15,9 +13,7 @@ pub struct Deck {
 }
 
 impl Deck {
-    /// Constructor
-    /// 
-    /// Loops through all suits and ranks to create a new standard deck of 52 playing cards
+    /// Constructor: Loops through all suits and ranks to create a new standard deck of 52 playing cards
     pub fn new() -> Self {
         let mut cards = Vec::with_capacity(52);
 

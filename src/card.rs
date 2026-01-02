@@ -1,4 +1,4 @@
-//! Card module
+//! # Card module
 //! 
 //! This module contains the `Card`, `Suit`, and `Rank` structs/enums
 //! for representing playing cards in blackjack.
@@ -6,8 +6,6 @@
 use std::fmt;
 use colored::*;
 
-/// Suit enum
-/// 
 /// Define the four suits in a standard deck of cards
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Suit {
@@ -29,9 +27,6 @@ impl Suit {
 }
 
 impl fmt::Display for Suit {
-    /// Format print for Suit
-    /// 
-    /// Matches suit to corresponding symbol
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let symbol = match self {
             Suit::HEARTS => "♥".red(),
@@ -43,8 +38,6 @@ impl fmt::Display for Suit {
     }
 }
 
-/// Rank enum
-/// 
 /// Define the ranks in a standard deck of cards
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Rank {
@@ -126,8 +119,6 @@ impl fmt::Display for Rank {
     }
 }
 
-/// Card struct
-/// 
 /// Represents a single card in a standard deck, each with a unique suit and rank
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Card {
@@ -136,9 +127,7 @@ pub struct Card {
 }
 
 impl Card {
-    /// Constructor
-    /// 
-    /// Creates a new `Card` with specified suit and rank
+    /// Constructor: Creates a new `Card` with specified suit and rank
     pub fn new(suit: Suit, rank: Rank) -> Card {
         Card {
             suit,

@@ -1,4 +1,4 @@
-//! Hand module
+//! # Hand module
 //! 
 //! This module contains the `Hand` struct and its associated methods
 //! for managing a player's or dealer's hand in blackjack.
@@ -6,8 +6,6 @@
 use crate::card::{Rank, Card};
 use std::fmt;
 
-/// Hand struct
-/// 
 /// Uses vector of `Cards` a player's or dealer's hand containing multiple playing cards
 #[derive(Debug, PartialEq, Clone)]
 pub struct Hand {
@@ -15,9 +13,7 @@ pub struct Hand {
 }
 
 impl Hand {
-    /// Constructor
-    /// 
-    /// Creates a new, empty hand that can hold multiple cards
+    /// Constructor: Creates a new, empty hand that can hold multiple cards
     pub fn new() -> Self {
         let cards = Vec::new();
 

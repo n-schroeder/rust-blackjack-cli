@@ -1,4 +1,4 @@
-//! Game State Management
+//! # Game State Management
 //! 
 //! This module holds the core logic for my blackjack game,
 //! including the `Game` struct, state tracking, and turn phases
@@ -7,8 +7,6 @@
 
 use crate::{deck::Deck, hand::*};
 
-/// Round Result enum
-/// 
 /// Contains all possible round results
 #[derive(Debug, PartialEq)]
 pub enum RoundResult {
@@ -18,8 +16,6 @@ pub enum RoundResult {
     Push,
 }
 
-/// Game struct
-/// 
 /// The Game struct contains all data that needs to be 
 /// managed and tracked throughout a blackjack game session
 #[derive(Debug, PartialEq)]
@@ -33,9 +29,7 @@ pub struct Game {
 }
 
 impl Game {
-    /// Constructor
-    /// 
-    /// Creates new game session with starting bankroll and initializes deck and hands
+    /// Constructor: Creates new game session with starting bankroll and initializes deck and hands
     pub fn new(starting_bankroll: u32) -> Self {
         let mut deck = Deck::new();
         deck.shuffle();

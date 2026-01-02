@@ -1,4 +1,4 @@
-//! User Interface
+//! # User Interface
 //! 
 //! Methods from this module prompt, gain information from, and display information to the user.
 //! This module is meant to process and validate inputs, then pass them off.
@@ -7,8 +7,6 @@ use crate::hand::Hand;
 use colored::Colorize;
 use std::io::{self, Write};
 
-/// Header display function
-/// 
 /// Displays the header with current bankroll
 pub fn display_header(i: u16, bankroll: u32) {
     // \x1B[2J clears screen, \x1B[1;1H moves cursor to top-left
