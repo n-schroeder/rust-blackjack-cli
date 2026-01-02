@@ -40,8 +40,13 @@ impl Deck {
         }
     }
 
-    /// Deal a card from the deck. Removes and returns the top card if available.
+    /// First creates new shuffled deck if needed, then removes and returns the top card if available.
     pub fn deal(&mut self) -> Option<Card> {
+        if self.cards.len() == 20 {
+            let new_deck = Deck::new();
+            self.cards = new_deck.cards;
+            self.shuffle();
+        }
         self.cards.pop()
     }
  }
