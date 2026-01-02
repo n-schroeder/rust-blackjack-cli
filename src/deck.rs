@@ -3,7 +3,7 @@ use rand::Rng;
 
 /// Deck struct
 /// 
-/// explain
+/// Represents a deck containing playing cards
 #[derive(Debug, PartialEq, Clone)]
 pub struct Deck {
     pub cards: Vec<Card>,
@@ -11,7 +11,8 @@ pub struct Deck {
 
 impl Deck {
     /// Constructor
-    /// explain
+    /// 
+    /// Loops through all suits and ranks to create a new standard deck of 52 playing cards
     pub fn new() -> Self {
         let mut cards = Vec::with_capacity(52);
 
@@ -23,7 +24,11 @@ impl Deck {
         Deck { cards }
     }
 
-    /// explain
+    /// Shuffle the deck using the Fisher-Yates algorithm
+    /// 
+    /// Fisher-Yates algorithm randomly shuffles the deck in place
+    /// by iterating backwards through the deck and swapping each card
+    /// with another card at a random index less than or equal to the current index.
     pub fn shuffle(&mut self) {
         let mut rng = rand::rng();
 
@@ -34,7 +39,7 @@ impl Deck {
         }
     }
 
-    /// explain
+    /// Deal a card from the deck. Removes and returns the top card if available.
     pub fn deal(&mut self) -> Option<Card> {
         self.cards.pop()
     }
@@ -44,7 +49,9 @@ impl Deck {
 mod tests {
     use super::*;
 
-    /// explain
+    /// Test `Deck` initialization
+    /// 
+    /// Creates new deck and checks that it contains 52 cards and asserts length == 52
     # [test]
     fn test_deck_initialization() {
         let d = Deck::new();
@@ -52,7 +59,11 @@ mod tests {
         assert_eq!(d.cards.len(), 52);
     }
 
-    /// explain
+    /// Test `shuffle()` method
+    /// 
+    /// Creates new deck, shuffles it, and prints both pre- and post-shuffle decks
+    /// 
+    /// **NOTE:** must manually verify that the order has changed using `cargo test -- --nocapture`
     # [test]
     fn test_deck_shuffle() {
         let mut d = Deck::new();
@@ -67,10 +78,6 @@ mod tests {
         for i in 0..52 {
             println!("Item {}: {:?}", i + 1, d.cards[i]);
         }
-
-        // NOTE:
-        //
-        // must manually test using cargo test -- --nocapture
     }
 
     /// Test `deal()` method
