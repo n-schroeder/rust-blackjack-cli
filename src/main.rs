@@ -1,46 +1,52 @@
-// Declare existing files
+//! # Blackjack CLI
+//! 
+//! A terminal-based implementation of Blackjack written in Rust.
+//! 
+//! ## Architecture
+//! * **Game Loop:** The `main` function handles the game flow (rounds, betting, dealing, turns, and round result).
+//! * **Modules:** Relies on `card`, `deck`, `hand`, `game`, and `user_interface` for game logic.
+//! 
+//! ## Usage
+//! Run with `cargo run`. Follow the prompts to bet and play.
+
 mod card;
 mod deck;
 mod hand;
 mod game;
 mod user_interface;
 
-// Imports
-use game::Game;
+use game::{Game, RoundResult};
 use user_interface as ui;
 
-use crate::game::RoundResult;
-
+/// Initializes the game, handles the main loop, and manages user input
+/// until the player runs out of money or chooses to quit.
 fn main() {
-    // Create new game
     let mut game = Game::new(1000);
 
-    // Session loop to simulate rounds
+    // Session loop:
+    //
+    // Simulates rounds until user quits or bankroll is 0
     'session: loop {
-        // Welcome user
         ui::display_header(game.i, game.bankroll);
 
-        // create temporary bet and assign to game.bet
         let temp_bet: u32 = ui::get_bet(game.bankroll);
         game.bet = temp_bet;
 
-        // initial deal
         game.initial_deal();
 
-        // loop to handle player actions
+        // Gameplay loop:
+        //
+        // Handles player and dealer turns, checks for busts and blackjacks
         'gameplay: loop {
-            // show hands
             println!();
             ui::show_hands(&game.player_hand, &game.dealer_hand);
 
-            // Check for blackjacks
             if game.player_hand.is_blackjack() { break 'gameplay }
 
+            // --- Player turn loop ---
             'player_turn: loop {
-                // check player bust
                 if game.player_bust() { break 'gameplay }
 
-                // Get user decision and show hands upon user hit
                 if ui::player_hits() {
                     game.deal_to_player();
                     println!();
@@ -50,37 +56,32 @@ fn main() {
                 else { break 'player_turn }
             }
 
-            // add dealer's downcard
             game.deal_to_dealer();
             
-            // show dealer turn and hand
             println!("\n\n=== Dealer's Turn ===\n\n");
             print!("    ");
             ui::show_hands(&game.player_hand, &game.dealer_hand);
 
-            // dealer turn loop
+            // --- Dealer turn loop ---
             loop {
-                // check for blackjack
                 if game.dealer_hand.is_blackjack() { break 'gameplay }
 
-                // check if >= 17
                 if game.dealer_hand.value() >= 17 { break 'gameplay }
 
-                // deal card to dealer and show hands
                 println!("\n    Dealer hits...");
                 game.deal_to_dealer();
                 print!("    ");
                 ui::show_hands(&game.player_hand, &game.dealer_hand);
 
-                // check bust
                 if game.dealer_bust() { break 'gameplay }
             }
         }
 
-        // print newline
         println!();
 
-        // Determine winner and handle payout logic
+        // --- Winner determination ---
+        //
+        // Determines winner, updates bankroll, and displays outcome
         let result = game.determine_winner();
 
         match result {
@@ -106,7 +107,6 @@ fn main() {
             },
         }
 
-        // prompt play again
         if !ui::play_again(game.bankroll) { break 'session }
     }
 }
@@ -116,6 +116,9 @@ fn main() {
 mod tests {
     use super::*;
 
+    /// Test game initialization
+    /// 
+    /// Creates new game with bankroll of 500, asserts bankroll, bet, and hand values
     #[test]
     fn test_game_initialization() {
         let game = Game::new(500);
@@ -125,6 +128,9 @@ mod tests {
         assert_eq!(game.dealer_hand.value(), 0);
     }
 
+    /// Test blackjack payout calculation
+    /// 
+    /// Creates new game, sets bet to 200, simulates blackjack result, and asserts payout amount
     #[test]
     fn test_blackjack_payout() {
         let mut game = Game::new(1000);
