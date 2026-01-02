@@ -98,12 +98,12 @@ mod tests {
         assert_eq!(card, return_card.unwrap())
     }
 
-    #[test]
     /// Test `deal()` method with deck replenishment
     ///
     /// Creates new deck, deals 33 cards to reduce deck size to 19,
     /// then deals one more card to trigger deck replenishment,
     /// and asserts that the deck size is reset to 51 cards.
+    #[test]
     fn test_deal_with_replenishment() {
         let mut d = Deck::new();
         for _ in 0..32 {
@@ -112,5 +112,11 @@ mod tests {
         assert_eq!(d.cards.len(), 20);
         d.deal();
         assert_eq!(d.cards.len(), 51);
+
+        let mut d2 = Deck::new();
+        for _ in 0..60 {
+            d2.deal();
+        }
+        assert_ne!(d2.cards.len(), 0);
     }
 }
