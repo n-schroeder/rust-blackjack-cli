@@ -1,8 +1,7 @@
 use std::fmt;
-
 use colored::*;
 
-// Create Suit enum
+/// Suit enum
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Suit {
     HEARTS,
@@ -12,6 +11,7 @@ pub enum Suit {
 }
 
 impl Suit {
+    /// explain
     pub fn all() -> &'static [Suit] {
         &[
             Suit::HEARTS,
@@ -21,7 +21,7 @@ impl Suit {
     }
 }
 
-// format print for Suit
+/// format print for Suit
 impl fmt::Display for Suit {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let symbol = match self {
@@ -34,8 +34,8 @@ impl fmt::Display for Suit {
     }
 }
 
+/// Create Rank enum
 #[derive(Debug, Clone, Copy, PartialEq)]
-// Create Rank enum
 pub enum Rank {
     TWO,
     THREE,
@@ -52,10 +52,9 @@ pub enum Rank {
     ACE,
 }
 
-// Define Rank implications
 impl Rank {
+    /// explain
     pub fn value(&self) -> u8 {
-    // match enum with Rank value
         match self {
             Rank::TWO => 2,
             Rank::THREE => 3,
@@ -72,6 +71,8 @@ impl Rank {
             Rank::ACE => 11,
         }
     }
+
+    /// explain
     pub fn all() -> &'static [Rank] {
         &[
             Rank::TWO,
@@ -91,8 +92,8 @@ impl Rank {
     }
 }
 
-// format print for Rank
 impl fmt::Display for Rank {
+    /// explain
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let symbol = match self {
             Rank::TWO => "2",
@@ -113,35 +114,37 @@ impl fmt::Display for Rank {
     }
 }
 
+/// Card struct
+/// 
+/// explain
 #[derive(Debug, Clone, Copy, PartialEq)]
-// Create Card Struct
 pub struct Card {
     suit: Suit,
     rank: Rank,
 }
 
-// Define Card implications
 impl Card {
-    // Constructor
+    /// Constructor
     pub fn new(suit: Suit, rank: Rank) -> Card {
         Card {
             suit,
             rank,
         }
     }
-    
-    // getter methods
+
+    /// explain
     pub fn rank(&self) -> &Rank {
         &self.rank
     }
 
+    /// explain
     pub fn value(&self) -> u8 {
         self.rank.value()
     }
 }
 
-// format print for Card
 impl fmt::Display for Card {
+    /// explain
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}{}", self.rank, self.suit)
     }
