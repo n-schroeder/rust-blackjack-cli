@@ -1,18 +1,18 @@
 //! # Blackjack CLI
-//! 
+//!
 //! A terminal-based implementation of Blackjack written in Rust.
-//! 
+//!
 //! ## Architecture
 //! * **Game Loop:** The `main` function handles the game flow (rounds, betting, dealing, turns, and round result).
 //! * **Modules:** Relies on `card`, `deck`, `hand`, `game`, and `user_interface` for game logic.
-//! 
+//!
 //! ## Usage
 //! Run with `cargo run`. Follow the prompts to bet and play.
 
 mod card;
 mod deck;
-mod hand;
 mod game;
+mod hand;
 mod user_interface;
 
 use game::{Game, RoundResult};
@@ -41,39 +41,50 @@ fn main() {
             println!();
             ui::show_hands(&game.player_hand, &game.dealer_hand);
 
-            if game.player_hand.is_blackjack() { break 'gameplay }
+            if game.player_hand.is_blackjack() {
+                break 'gameplay;
+            }
 
             // --- Player turn loop ---
             'player_turn: loop {
-                if game.player_bust() { break 'gameplay }
+                if game.player_bust() {
+                    break 'gameplay;
+                }
 
                 if ui::player_hits() {
                     game.deal_to_player();
                     println!();
                     ui::show_hands(&game.player_hand, &game.dealer_hand);
                     continue;
+                } else {
+                    break 'player_turn;
                 }
-                else { break 'player_turn }
             }
 
             game.deal_to_dealer();
-            
+
             println!("\n\n=== Dealer's Turn ===\n\n");
             print!("    ");
             ui::show_hands(&game.player_hand, &game.dealer_hand);
 
             // --- Dealer turn loop ---
             loop {
-                if game.dealer_hand.is_blackjack() { break 'gameplay }
+                if game.dealer_hand.is_blackjack() {
+                    break 'gameplay;
+                }
 
-                if game.dealer_hand.value() >= 17 { break 'gameplay }
+                if game.dealer_hand.value() >= 17 {
+                    break 'gameplay;
+                }
 
                 println!("\n    Dealer hits...");
                 game.deal_to_dealer();
                 print!("    ");
                 ui::show_hands(&game.player_hand, &game.dealer_hand);
 
-                if game.dealer_bust() { break 'gameplay }
+                if game.dealer_bust() {
+                    break 'gameplay;
+                }
             }
         }
 
@@ -89,25 +100,27 @@ fn main() {
                 // print player win
                 ui::print_outcome(true, game.bet);
                 game.bankroll += game.bet;
-            },
+            }
             RoundResult::DealerWin => {
                 // print player loss
                 ui::print_outcome(false, game.bet);
                 game.bankroll -= game.bet
-            },
+            }
             RoundResult::PlayerBlackjack => {
                 // change win amount
                 let payout: u32 = (game.bet * 3) / 2;
                 // print blackjack message
                 ui::print_blackjack(payout);
-            },
+            }
             RoundResult::Push => {
                 // print push message
                 ui::print_push();
-            },
+            }
         }
 
-        if !ui::play_again(game.bankroll) { break 'session }
+        if !ui::play_again(game.bankroll) {
+            break 'session;
+        }
     }
 }
 
@@ -117,7 +130,7 @@ mod tests {
     use super::*;
 
     /// Test game initialization
-    /// 
+    ///
     /// Creates new game with bankroll of 500, asserts bankroll, bet, and hand values
     #[test]
     fn test_game_initialization() {
@@ -129,7 +142,7 @@ mod tests {
     }
 
     /// Test blackjack payout calculation
-    /// 
+    ///
     /// Creates new game, sets bet to 200, simulates blackjack result, and asserts payout amount
     #[test]
     fn test_blackjack_payout() {
@@ -140,7 +153,7 @@ mod tests {
             RoundResult::PlayerBlackjack => {
                 let payout: u32 = (game.bet * 3) / 2;
                 assert_eq!(payout, 300);
-            },
+            }
             _ => panic!("Expected PlayerBlackjack result"),
         }
     }

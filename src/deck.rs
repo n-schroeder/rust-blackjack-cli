@@ -1,9 +1,9 @@
 //! # Deck module
-//! 
+//!
 //! This module contains the `Deck` struct and its associated methods
 //! for managing a deck of playing cards in blackjack.
 
-use crate::card::{Suit, Rank, Card};
+use crate::card::{Card, Rank, Suit};
 use rand::Rng;
 
 /// Represents a deck containing playing cards
@@ -26,7 +26,7 @@ impl Deck {
     }
 
     /// Shuffle the deck using the Fisher-Yates algorithm
-    /// 
+    ///
     /// Fisher-Yates algorithm randomly shuffles the deck in place
     /// by iterating backwards through the deck and swapping each card
     /// with another card at a random index less than or equal to the current index.
@@ -36,7 +36,7 @@ impl Deck {
         for i in (1..self.cards.len()).rev() {
             let n = rng.random_range(0..=i);
 
-            self.cards.swap(i,n);
+            self.cards.swap(i, n);
         }
     }
 
@@ -49,16 +49,16 @@ impl Deck {
         }
         self.cards.pop()
     }
- }
+}
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
     /// Test `Deck` initialization
-    /// 
+    ///
     /// Creates new deck and checks that it contains 52 cards and asserts length == 52
-    # [test]
+    #[test]
     fn test_deck_initialization() {
         let d = Deck::new();
 
@@ -66,11 +66,11 @@ mod tests {
     }
 
     /// Test `shuffle()` method
-    /// 
+    ///
     /// Creates new deck, shuffles it, and prints both pre- and post-shuffle decks
-    /// 
+    ///
     /// **NOTE:** must manually verify that the order has changed using `cargo test -- --nocapture`
-    # [test]
+    #[test]
     fn test_deck_shuffle() {
         let mut d = Deck::new();
 
@@ -78,7 +78,7 @@ mod tests {
             println!("Item {}: {:?}", i + 1, d.cards[i]);
         }
         println!();
-        
+
         d.shuffle();
 
         for i in 0..52 {
@@ -87,14 +87,14 @@ mod tests {
     }
 
     /// Test `deal()` method
-    /// 
+    ///
     /// Creates new deck, deals one card, and compares to expected card.
-    # [test]
+    #[test]
     fn test_deal() {
         let mut d = Deck::new();
         let card = d.cards[51];
         let return_card = d.deal();
-        
+
         assert_eq!(card, return_card.unwrap())
     }
 

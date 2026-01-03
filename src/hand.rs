@@ -1,9 +1,9 @@
 //! # Hand module
-//! 
+//!
 //! This module contains the `Hand` struct and its associated methods
 //! for managing a player's or dealer's hand in blackjack.
 
-use crate::card::{Rank, Card};
+use crate::card::{Card, Rank};
 use std::fmt;
 
 /// Uses vector of `Cards` a player's or dealer's hand containing multiple playing cards
@@ -36,7 +36,7 @@ impl Hand {
     }
 
     /// Calculate the total value of the hand
-    /// 
+    ///
     /// Accounts for Ace being worth 1 or 11
     pub fn value(&self) -> u8 {
         let mut total_value: u8 = 0;
@@ -44,7 +44,7 @@ impl Hand {
 
         for c in &self.cards {
             total_value += c.value();
-            
+
             if c.rank() == &Rank::ACE {
                 ace_count += 1;
             }
@@ -75,9 +75,9 @@ mod tests {
     use crate::card::Suit;
 
     /// Test `add_card()` method
-    /// 
+    ///
     /// Adds a card to the hand and asserts that the hand length increases and the card is present
-    # [test]
+    #[test]
     fn test_add_card() {
         let mut h = Hand::new();
         let c = Card::new(Suit::SPADES, Rank::ACE);
@@ -89,9 +89,9 @@ mod tests {
     }
 
     /// Test `value()` calculation
-    /// 
+    ///
     /// Adds multiple cards, including Aces, and asserts that the hand value is calculated correctly
-    # [test]
+    #[test]
     fn test_value_calculation() {
         let mut h = Hand::new();
 

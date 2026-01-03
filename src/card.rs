@@ -1,10 +1,10 @@
 //! # Card module
-//! 
+//!
 //! This module contains the `Card`, `Suit`, and `Rank` structs/enums
 //! for representing playing cards in blackjack.
 
-use std::fmt;
 use colored::*;
+use std::fmt;
 
 /// Define the four suits in a standard deck of cards
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -18,11 +18,7 @@ pub enum Suit {
 impl Suit {
     /// Returns reference to all possible suits
     pub fn all() -> &'static [Suit] {
-        &[
-            Suit::HEARTS,
-            Suit::DIAMONDS,
-            Suit::CLUBS,
-            Suit::SPADES]
+        &[Suit::HEARTS, Suit::DIAMONDS, Suit::CLUBS, Suit::SPADES]
     }
 }
 
@@ -58,7 +54,7 @@ pub enum Rank {
 
 impl Rank {
     /// Match rank to its corresponding integer value
-    /// 
+    ///
     /// Note: `Ace` is valued at 11 here; `Hand` logic will adjust as needed
     pub fn value(&self) -> u8 {
         match self {
@@ -93,8 +89,8 @@ impl Rank {
             Rank::JACK,
             Rank::QUEEN,
             Rank::KING,
-            Rank::ACE
-        ] 
+            Rank::ACE,
+        ]
     }
 }
 
@@ -129,10 +125,7 @@ pub struct Card {
 impl Card {
     /// Constructor: Creates a new `Card` with specified suit and rank
     pub fn new(suit: Suit, rank: Rank) -> Card {
-        Card {
-            suit,
-            rank,
-        }
+        Card { suit, rank }
     }
 
     /// Returns a reference to the rank of the card
