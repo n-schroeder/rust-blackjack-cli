@@ -2,17 +2,13 @@
 
 > A basic command-line Blackjack game written in Rust
 
-[![Watch the Demo](https://img.youtube.com/vi/[VIDEO_ID]/0.jpg)](https://www.youtube.com/watch?v=[VIDEO_ID])
-
-^ Placeholder, dont click!
-
 ## About
 
 I built this project as a way to expose myself to Rust and force myself to learn the basics through practice,
 with a 'just-in-time' learning approach. However, more than that, I made an effort to abide by many professional
 practices and conventions such as
 
-- Dedicated module, struct, and method/function documentation (check it out with `cargo doc --open`!)
+- Dedicated module, struct, and method/function documentation (check it out with `cargo doc --open`)
 - Daily [log-style project documentation](./dev-logs), with an atttempt to film video logs daily
 - New branches for various tasks like new features, refactors, or testing
 - Specific and concise commit messages
@@ -24,13 +20,6 @@ practices and conventions such as
 - **Consistent Shuffling:** One standard 52-card deck is consistently shuffled in place using the Fisher-Yates algorithm
 - **UI:** Clean user-interface, with a dedicated [UI module](./src/user_interface.rs)
 
-## Technical Overview
-
-I focussed on writing clear, legible, and safe rust code to form good programming habits
-
-[![Watch the Code Overview](https://img.youtube.com/vi/[VIDEO_ID]/0.jpg)](https://www.youtube.com/watch?v=[VIDEO_ID])
-
-^ Placeholder, dont click!
 
 ## Key Concepts
 
