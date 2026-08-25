@@ -37,7 +37,7 @@ fn main() {
         // Gameplay loop:
         //
         // Handles player and dealer turns, checks for busts and blackjacks
-        'gameplay: loop {
+        'gameplay: {
             println!();
             ui::show_hands(&game.player_hand, &game.dealer_hand);
 
@@ -111,6 +111,7 @@ fn main() {
                 let payout: u32 = (game.bet * 3) / 2;
                 // print blackjack message
                 ui::print_blackjack(payout);
+                game.bankroll += payout;
             }
             RoundResult::Push => {
                 // print push message
